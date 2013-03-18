@@ -160,6 +160,7 @@ public class Model2 {
 	
 	
 	public static void main(String [] args){
+	    System.out.println("Mike's comment");
 		
 		
 		BitSet bits = new BitSet();
