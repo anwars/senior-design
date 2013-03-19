@@ -14,10 +14,20 @@ public class Model2 {
 	static double[][] globalMatrix1 = new double[3][3]; //the LHS of the eqn
 	static double[][] globalMatrix2 = new double[3][1]; //RHS
 	static double[] allPayments = new double[3]; //keeps track of all payments
+	static double[] baseAmounts = new double[3]; //keeps track of base amounts
+	
+	static ArrayList<ArrayList<Integer>> bankCreditors = new ArrayList<ArrayList<Integer>>(); 
+	//an arrayList for storing the creditors for each bank. outer A_L: index starts at 0, inner : at 1 
 	
 	static final Integer numberOfBanks = 3;
+	static boolean [] matrixArray = new boolean[3];
 	
-	public static void BankSetup(){
+	static int globalCount = 1; //for debug purposes
+	
+	static int failureCount = 0;
+	
+	
+	public static void BankSetup(){ //the scope of A,B and C is wrong!!!! Also, we have Matrix A, B. Be careful!
 		
 		Bank A = new Bank("A", 7.);
 		Bank B = new Bank("B", 9.);
@@ -46,6 +56,7 @@ public class Model2 {
 	public static void MatrixSetup(int bankNum, double [] arr, boolean type, int row){
 		
 		allPayments[row] = arr[0]; // this saves the payment value for later comparison
+		baseAmounts[row] = arr[1]; //saves base amount per bank
 		
 		double num = 0 ; //this will hold either the const value or base value
 		
@@ -87,6 +98,19 @@ public class Model2 {
 		
 		globalMatrix2[row][0] = num;
 		
+		bankCreditors.add(new ArrayList<Integer>());
+		
+		ArrayList<Integer> hold = new ArrayList<Integer>();
+		
+		for (int i = 0; i < globalMatrix1[row].length; i++){
+			if (globalMatrix1[row][i] == -1){
+				hold.add(i+1);
+			}
+		}
+		
+		bankCreditors.add(hold);
+
+		
 	}
 	
 	
@@ -100,9 +124,7 @@ public class Model2 {
 		 * Maybe this could be refactored into a getInput function?
 		 */
 		
-		; 
 		
-		int count = 0;
 		
 		//double[][] arr1 = { {1, -1, 0}, {0, 1, -1}, {-1, 0, 1}}; 
 		
@@ -117,7 +139,7 @@ public class Model2 {
 				double gamma = 1.0; //a scalar to force a solution to the singularity
 				boolean solved = true; //we want to set to false if no solution
 				
-				if (A.det() == 0) { System.out.println("DET = 0"); gamma = 0.8;}
+			//	if (A.det() == 0) { System.out.println("DET = 0"); gamma = 0.8;}
 				
 				A = A.times(gamma);
 				
@@ -126,32 +148,122 @@ public class Model2 {
 				
 				double [][] resultArr = result.getArray();
 				
-				double orig1 = allPayments[0]; //orig amount of money that was owed
+				double orig1 = allPayments[0]; //orig amount of money that was owed for bank1
 				double orig2 = allPayments[1];
 				double orig3 = allPayments[2];
 				
 				//System.out.println(orig1 + "\t" + orig2 + "\t"  + orig3);
+				
+				//if a bank receives more money than it is owed
 				
 				if ((resultArr[0][0] > orig1) || (resultArr[1][0] > orig2 || (resultArr[2][0] > orig3))) {
 					//System.out.println("NOT A SOLUTION!");
 					solved = false;
 					}
 				
-
-				//	if (resultArr[0][0] + globalMatrix2[0][0] < ) //if more money was paid that what a bank had
+				boolean bankBool1 = matrixArray[0];
+				boolean bankBool2 = matrixArray[1];
+				boolean bankBool3 = matrixArray[2];
 				
+				
+				/*
+				if (globalCount == 4){
+					
+					System.out.println(bankBool1);
+					System.out.println(bankBool2);
+					System.out.println(bankBool3);
+					
+				}
+				*/
+				//System.out.println(solved);	
+				
+				//if you're solvent AND the amount of money that you ended up having was less than what was required to be paid, then again discard
+				
+				//need to solve for all solvent case
+				if ((bankBool1 && (resultArr[0][0] < orig1)) || (bankBool2 && (resultArr[1][0]  < orig2)) || (bankBool3 && (resultArr[0][0] < orig3))){
+					solved = false;
+					
+					//if more money was paid that what a bank had
+				}
+				double cash1 = 0.0;
+				double cash2 = 0.0;
+				double cash3 = 0.0;
+				
+				ArrayList<Integer> a1 = bankCreditors.get(0);
+				ArrayList<Integer> a2 = bankCreditors.get(1);
+				ArrayList<Integer> a3 = bankCreditors.get(2);
+				
+				
+					for (int index : a1){
+						cash1 = cash1 + resultArr[index-1][0];
+					}
+					
+					for (int index : a2){
+						cash2 = cash2 + resultArr[index-1][0];
+					}
+					
+					for (int index : a3){
+						cash3 = cash3 + resultArr[index-1][0];
+					}
+					
+					cash1 = cash1 + baseAmounts[0]; 
+					cash2 = cash2 + baseAmounts[1]; 
+					cash3 = cash3 + baseAmounts[2]; 
+					//write algorithm to determine if bank is solvent or not using the fact that we have all the 
+					// banks that owe a particular bank cash. ALSO TEST
+					
+					if ((bankBool1 && (cash1 < orig1)) || (bankBool2 && (cash2  < orig2)) || (bankBool3 && (cash3 < orig3))){
+						solved = false;
+						
+						//if more money was paid that what a bank had
+					}
+				
+				
+				
+				/*
+				if (globalCount == 8){
+					
+					System.out.println(resultArr[0][0] + "\t" + orig1);
+					System.out.println(resultArr[1][0] + "\t" + orig2);
+					System.out.println(resultArr[2][0] + "\t" + orig3);
+					
+				}
+				*/
+					
+					
+				//otherwise, if you were insolvent and the amount of money that you paid was less than what was 
+				//required, then this state is acceptable; however you were INSOLVENT
+				
+				else if ((resultArr[0][0] < orig1) || (resultArr[1][0] < orig2) || (resultArr[2][0] < orig3)) {
+					//System.out.print("INSOLVENT! \t ");
+					if (resultArr[0][0] < orig1) failureCount++;
+					if (resultArr[1][0] < orig2) failureCount++;
+					if (resultArr[2][0] < orig3) failureCount++;
+				}
+				
+			//	if (globalCount == 4) System.out.println("Solved is: " + solved);
+				
+				System.out.println(solved);
 			
 				//else System.out.println("SOLVED THE PROBLEM!"); //this is at the very end
 				
-				System.out.println(resultArr[0][0] + "\t" + resultArr[1][0] + "\t" + resultArr[2][0]);
+				//System.out.println(resultArr[0][0] + "\t" + resultArr[1][0] + "\t" + resultArr[2][0]);
 				
+				//System.out.println(globalMatrix2[0][0] + "\t" + globalMatrix2[1][0] + "\t" + globalMatrix2[2][0]);
+				
+				//System.out.println(allPayments[0] + "\t" + allPayments[1] + "\t" + allPayments[2]);
+				
+			}
+			
+			catch(ArrayIndexOutOfBoundsException e){
+				System.out.println("ARRAY IS OUT OF BOUNDS");
 			}
 			
 			catch (Exception e){
 				//e.printStackTrace();
 				System.out.println("Singularity!");
-				count++;
-				//System.out.println(count);
+				
+				
 				
 			}
 		
@@ -160,8 +272,7 @@ public class Model2 {
 	
 	
 	public static void main(String [] args){
-	    System.out.println("Mike's comment");
-	    System.out.println("Saad's comment");
+	  
 		
 		
 		BitSet bits = new BitSet();
@@ -179,10 +290,11 @@ public class Model2 {
 		int row1 = 1;
 		int row2 = 2;
 		
+		/*
 		MatrixSetup(bankNum1, bankArr1, false, row0); //false means that we are in linear regime
 		MatrixSetup(bankNum2, bankArr2, false, row1);
 		MatrixSetup(bankNum3, bankArr3, false, row2);
-		
+		*/
 		// Now we need a practical and reliable way to "set" bank state (const vs linear regime)
 		
 		Integer count = new Integer(0);
@@ -208,21 +320,24 @@ public class Model2 {
 			//System.out.println(bitArr);
 			
 			//Now need to setup the true/false array
-			boolean [] matrixArray = new boolean[3];
 			
 			
-			boolean bankBool1;
+			
+			boolean bankBool1; //false means that it is insolvent; true means that it is solvent
 			boolean bankBool2;
 			boolean bankBool3;
 			
 			if (bitArr[0] == '0') bankBool1 = false;
 			else bankBool1 = true;
+			matrixArray[0] = bankBool1;
 			
 			if (bitArr[1] == '0') bankBool2 = false;
 			else bankBool2 = true;
+			matrixArray[1] = bankBool2;
 			
 			if (bitArr[2] == '0') bankBool3 = false;
 			else bankBool3 = true;
+			matrixArray[2] = bankBool3;
 			
 			
 			MatrixSetup(bankNum1, bankArr1, bankBool1, row0); //false means that we are in linear regime
@@ -233,12 +348,15 @@ public class Model2 {
 			
 		//	System.out.println(Integer.toBinaryString(count));
 			count++;
+			
+			globalCount++;
 		}
-		//MatrixSolution();
+		System.out.println();
+		System.out.println("Number of failed banks: " + failureCount);
 		
 		
 		
-		
+	
 		
 		
 		
