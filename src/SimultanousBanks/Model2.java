@@ -98,7 +98,7 @@ public class Model2 {
 		
 		globalMatrix2[row][0] = num;
 		
-		bankCreditors.add(new ArrayList<Integer>());
+		//bankCreditors.add(new ArrayList<Integer>());
 		
 		ArrayList<Integer> hold = new ArrayList<Integer>();
 		
@@ -220,15 +220,19 @@ public class Model2 {
 				
 				
 				
-				/*
+				
 				if (globalCount == 8){
-					
-					System.out.println(resultArr[0][0] + "\t" + orig1);
-					System.out.println(resultArr[1][0] + "\t" + orig2);
-					System.out.println(resultArr[2][0] + "\t" + orig3);
+					/*
+					for (int ind : a1){
+						System.out.println(ind);
+					}
+					*/
+					//System.out.println(cash1 + "\t" + orig1);
+					//System.out.println(cash2 + "\t" + orig2);
+					//System.out.println(cash3 + "\t" + orig3);
 					
 				}
-				*/
+				
 					
 					
 				//otherwise, if you were insolvent and the amount of money that you paid was less than what was 
@@ -277,7 +281,7 @@ public class Model2 {
 		
 		BitSet bits = new BitSet();
 		
-		double [] bankArr1 = {118, 7, 1, -1, 0}; //[0] = constant, [1] = base cash, [2] = which bank owes x
+		double [] bankArr1 = {10, 7, 1, -1, 0}; //[0] = constant, [1] = base cash, [2] = which bank owes x
 		double [] bankArr2 = {12, 9, 0, 1, -1};
 		double [] bankArr3 = {7, 4, -1, 0, 1}; 
 		
