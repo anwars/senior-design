@@ -8,34 +8,45 @@ import Jama.Matrix;
 
 public class Model2 {
 	
-	static ArrayList<Bank> allBanks = new ArrayList<Bank>();
+	//static ArrayList<Bank> allBanks = new ArrayList<Bank>();
 	 //stores whether bank failed or not
 	
 	//-------------------------------------------------------------------------------------------------------//
 	
 	
-	static double[][] globalMatrix1 = new double[5][5]; //the LHS of the eqn
-	static double[][] globalMatrix2 = new double[5][1]; //RHS
+	static double[][] globalMatrix1 = new double[8][8]; //the LHS of the eqn
+	static double[][] globalMatrix2 = new double[8][1]; //RHS
 	
 	static double[][] bArr1;
 	static double[][] bArr2;
 	static double[][] bArr3;
 	static double[][] bArr4;
 	static double[][] bArr5;
+	static double[][] bArr6;
+	static double[][] bArr7;
+	static double[][] bArr8;
 	
-	static double [][] debtArr1 = new double[3][3];    //{ {-1.}, {-1.,-1.},{-1.,-1.}};		//  = { {1}, {3, 10}, {4, 1} };
-	static double [][] debtArr2 = new double[3][3];        //{ {-1.}, {-1.,-1.},{-1.,-1.}}; 		//  = { {2}, {1, 6}, {4, 4} };
-	static double [][] debtArr3 = new double[3][3];     //{ {-1.}, {-1.,-1.} }; 		//  = { {3}, {2, 4} };
-	static double [][] debtArr4 = new double[3][3];    //{ {-1.}, {-1.,-1.} }; 		//  = { {4}, {5, 13} };
-	static double [][] debtArr5 = new double[3][3];  //  { {-1.}, {-1.,-1.} }; 		//  = { {5}, {3, 8} };
+	static double [][] debtArr1 = new double[30][30];    //{ {-1.}, {-1.,-1.},{-1.,-1.}};		//  = { {1}, {3, 10}, {4, 1} };
+	static double [][] debtArr2 = new double[30][30];        //{ {-1.}, {-1.,-1.},{-1.,-1.}}; 		//  = { {2}, {1, 6}, {4, 4} };
+	static double [][] debtArr3 = new double[30][30];     //{ {-1.}, {-1.,-1.} }; 		//  = { {3}, {2, 4} };
+	static double [][] debtArr4 = new double[30][30];    //{ {-1.}, {-1.,-1.} }; 		//  = { {4}, {5, 13} };
+	static double [][] debtArr5 = new double[30][30];  //  { {-1.}, {-1.,-1.} }; 		//  = { {5}, {3, 8} };
+	static double [][] debtArr6 = new double[30][30];
+	static double [][] debtArr7 = new double[30][30];
+	static double [][] debtArr8 = new double[30][30];
 	
 	static double [][][] allConnections = new double[25][25][25];
 	static double [][][] allDebts = new double[25][25][25];
 	
+	static final Integer numberOfBanks = 8;
+	static final Integer powerBanks = (int)Math.pow(2, numberOfBanks);
+	
+	static double [] allBanks = new double[numberOfBanks];
+	
 	static HashMap<Double, Double> solvencyMap = new HashMap<Double, Double>();
 	static HashMap<Double, Boolean> bankFailure = new HashMap<Double, Boolean>();
 	
-	static final Integer numberOfBanks = 5; 
+	
 	static int globalCount = 1; //for debug purposes
 	
 	
@@ -94,10 +105,11 @@ public class Model2 {
 				
 				double[] src = {srcBank};
 				
+				/*
 				System.out.println("i = " + i);
 				System.out.println("j = " + j);
 				System.out.println();
-				
+				*/
 				if(srcBank == 0.0) break;
 				allDebts[srcBank-1][0] = src;
 				
@@ -148,6 +160,8 @@ public class Model2 {
 		double num = 0 ; //this will hold either the const value or base value
 		
 		int count = 0;
+		
+		
 		for (double[] x : arr){
 			double bankID = x[0];
 			double bankBool;
@@ -158,11 +172,19 @@ public class Model2 {
 			count++;
 		}
 		
+		
 		double bank1 = 0;
 		double bank2 = 0;
 		double bank3 = 0;
 		double bank4 = 0;
 		double bank5 = 0;
+		double bank6 = 0;
+		double bank7 = 0;
+		double bank8 = 0;
+		
+		for (int q =0; q < allBanks.length; q++){
+			allBanks[q] = 0;
+		}
 		
 		double min1 = 0;
 		double min2 = 0;
@@ -173,6 +195,9 @@ public class Model2 {
 		ArrayList<Double> allDebtors = new ArrayList<Double>();
 		
 		int destBank = (int)arr[0][0];
+		
+		allBanks[destBank-1] = 1;
+		
 		
 		switch (destBank){
 		
@@ -195,7 +220,15 @@ public class Model2 {
 		case 5:
 			bank5 = 1;
 			break;
-			
+		case 6:
+			bank6 = 1;
+			break;
+		case 7:
+			bank7 = 1;
+			break;
+		case 8:
+			bank8 = 1;
+			break;
 		}
 		
 		double total = 0; //this will calc RHS
@@ -239,7 +272,10 @@ public class Model2 {
 				//total = total*ratio;
 				
 				//if (row == 3) System.out.println(total);
-							
+				
+				allBanks[sourceBank - 1] = -1*ratio;
+				
+				
 				switch (sourceBank){
 				
 				case 1:
@@ -264,6 +300,18 @@ public class Model2 {
 					
 				case 5:
 					bank5 = -1*ratio;
+					min5 = min;
+					break;
+				case 6:
+					bank6 = -1*ratio;
+					min5 = min;
+					break;
+				case 7:
+					bank7 = -1*ratio;
+					min5 = min;
+					break;
+				case 8:
+					bank8 = -1*ratio;
 					min5 = min;
 					break;
 				
@@ -296,13 +344,26 @@ public class Model2 {
 		*/
 		
 		
-		globalMatrix1[row][0] = bank1;
-		globalMatrix1[row][1] = bank2;
-		globalMatrix1[row][2] = bank3;
-		globalMatrix1[row][3] = bank4;
-		globalMatrix1[row][4] = bank5;
+		globalMatrix1[row][0] = allBanks[0];
+		globalMatrix1[row][1] = allBanks[1];
+		globalMatrix1[row][2] = allBanks[2];
+		globalMatrix1[row][3] = allBanks[3];
+		globalMatrix1[row][4] = allBanks[4];
+		globalMatrix1[row][5] = allBanks[5];
+		globalMatrix1[row][6] = allBanks[6];
+		globalMatrix1[row][7] = allBanks[7];
 		
 		globalMatrix2[row][0] = total;
+		
+		//System.out.println("Banks: " + bank1 + "\t" + bank2 + "\t" + bank3 + "\t" + bank4 + "\t" + bank5 + "\t" + bank6 + "\t" + bank7 + "\t" + bank8);
+		//System.out.println("Array: " + allBanks[0] + "\t" + allBanks[1] + "\t" + allBanks[2] + "\t" + allBanks[3] + "\t" + allBanks[4] + "\t" + allBanks[5] + "\t" + allBanks[6] + "\t"+ allBanks[7]);
+		
+		//System.out.println();
+		
+		
+		
+		
+		
 		
 		//bankCreditors.add(new ArrayList<Integer>());
 		
@@ -460,7 +521,18 @@ public class Model2 {
 				
 			//RESULTS OF ALL CALCULATIONS
 			System.out.print(solved + "\t");
-			System.out.println(resultArr[0][0] + "\t" + resultArr[1][0] + "\t" + resultArr[2][0] + "\t" + resultArr[3][0] + "\t" + resultArr[4][0]);
+			for(int x = 0; x < resultArr.length; x++){
+				
+				System.out.print(resultArr[x][0] + "\t");
+				
+			}
+			System.out.println();
+			
+			
+			
+			
+			
+			//System.out.println(resultArr[0][0] + "\t" + resultArr[1][0] + "\t" + resultArr[2][0] + "\t" + resultArr[3][0] + "\t" + resultArr[4][0]);
 			
 				
 				
@@ -479,9 +551,13 @@ public class Model2 {
 				e.printStackTrace();
 			}
 			
+			catch(NullPointerException e){
+				e.printStackTrace();
+			}
+			
 			catch (Exception e){
 				//e.printStackTrace();
-				System.out.println("Singularity!");
+				System.out.println("Singularity: " + A.det());
 				
 				
 				
@@ -494,7 +570,7 @@ public class Model2 {
 		
 		boolean acceptable = true;
 		
-		for (int i = 0; i < 5; i++){ //
+		for (int i = 0; i < numberOfBanks; i++){ //
 			
 			//double bankID = allConnections[i][0][0];
 			double [][] twoArr = allConnections[i];
@@ -508,7 +584,12 @@ public class Model2 {
 				double payment = resultArr[(int) bankID-1][0];
 				if (payment < 0) acceptable = false; //no negative results allowed
 				
-				double isSolvent = solvencyMap.get(bankID);
+				double isSolvent = -1.0;
+				if (solvencyMap.containsKey(bankID)){
+				isSolvent = solvencyMap.get(bankID);
+				}
+				
+				if (!solvencyMap.containsKey(bankID)) System.out.println("NOT IN SOLVENCY MAP!!!");
 				
 				boolean solv; 
 				if (isSolvent == 1.0) solv = true;
@@ -540,9 +621,9 @@ public class Model2 {
 		
 		Integer count = new Integer(0);
 	
+	System.out.println("Start of main");	
 		
-		
-		for (int i0 = 0; i0 < 32; i0++){
+		for (int i0 = 0; i0 < powerBanks; i0++){
 			
 			String bitString = Integer.toBinaryString(count);
 			
@@ -571,6 +652,9 @@ public class Model2 {
 			double bankBool3;
 			double bankBool4;
 			double bankBool5;
+			double bankBool6;
+			double bankBool7;
+			double bankBool8;
 			
 			if (bitArr[0] == '0') bankBool1 = 0;
 			else bankBool1 = 1;
@@ -591,16 +675,25 @@ public class Model2 {
 			if (bitArr[4] == '0') bankBool5 = 0;
 			else bankBool5 = 1;
 			//matrixArray[4] = bankBool5;
+			
+			if (bitArr[5] == '0') bankBool6 = 0;
+			else bankBool6 = 1;
+			
+			if (bitArr[6] == '0') bankBool7 = 0;
+			else bankBool7 = 1;
+			
+			if (bitArr[7] == '0') bankBool8 = 0;
+			else bankBool8 = 1;
 		
 		// new encoding for banks
-		double [][] bankArr1 = { {1}, {2, 6, 9, bankBool2} }; 
+		double [][] bankArr1 = { {1}, {2, 6, 9, bankBool2}, {6, 4, 3, bankBool6} }; 
 		double [][] bankArr2 = { {2}, {3, 4, 2, bankBool3} };
-		double [][] bankArr3 = { {3}, {1, 10, 7, bankBool1} , {5, 8, 1, bankBool5} };
-		double [][] bankArr4 = { {4}, {1, 1, 7, bankBool1}, {2, 4, 9, bankBool2} };
-		double [][] bankArr5 = { {5}, {4, 13, 11, bankBool4} };
-		double [][] bankArr6;
-		double [][] bankArr7;
-		
+		double [][] bankArr3 = { {3}, {1, 10, 7, bankBool1} , {5, 8, 1, bankBool5}, {8, 7, 9, bankBool8 } };
+		double [][] bankArr4 = { {4}, {1, 1, 7, bankBool1}, {2, 4, 9, bankBool2}, {8, 3, 9, bankBool8 } };
+		double [][] bankArr5 = { {5}, {4, 13, 11, bankBool4}, {5, 11, 9, bankBool5 } };
+		double [][] bankArr6 = { {6}, {4, 3, 11, bankBool4} };
+		double [][] bankArr7 = { {7}, {1, 2, 7, bankBool1}, {3, 5, 2, bankBool3} };
+		double [][] bankArr8 = { {8}, {5, 2, 1, bankBool5} };
 		
 		if (globalCount > 0){	
 		
@@ -609,12 +702,18 @@ public class Model2 {
 		bArr3 = bankArr3;
 		bArr4 = bankArr4;
 		bArr5 = bankArr5;
+		bArr6 = bankArr6;
+		bArr7 = bankArr7;
+		bArr8 = bankArr8;
 		
 		allConnections[0] = bArr1;
 		allConnections[1] = bArr2;
 		allConnections[2] = bArr3;
 		allConnections[3] = bArr4;
 		allConnections[4] = bArr5;
+		allConnections[5] = bArr6;
+		allConnections[6] = bArr7;
+		allConnections[7] = bArr8;
 		
 		
 		if(!setup)	{
@@ -643,18 +742,27 @@ public class Model2 {
 		int bankNum3 = 3;
 		int bankNum4 = 4;
 		int bankNum5 = 5;
+		int bankNum6 = 6;
+		int bankNum7 = 7;
+		int bankNum8 = 8;
 		
 		int row0 = 0;
 		int row1 = 1;
 		int row2 = 2;
 		int row3 = 3;
 		int row4 = 4;
+		int row5 = 5;
+		int row6 = 6;
+		int row7 = 7;
 			
 			MatrixSetup(bankNum1, bankArr1, row0); //false means that we are in linear regime
 			MatrixSetup(bankNum2, bankArr2, row1);
 			MatrixSetup(bankNum3, bankArr3, row2);
 			MatrixSetup(bankNum4, bankArr4, row3);
 			MatrixSetup(bankNum5, bankArr5, row4);
+			MatrixSetup(bankNum6, bankArr6, row5);
+			MatrixSetup(bankNum7, bankArr7, row6);
+			MatrixSetup(bankNum8, bankArr8, row7);
 				
 			/*
 			for (double a = 1; a <= 5; a++){
@@ -672,7 +780,7 @@ public class Model2 {
 			
 		}
 		
-		//System.out.println(globalMatrix2[1][0]);
+		System.out.println(globalMatrix1[4][7]);
 		
 		//debtSetup();
 		
