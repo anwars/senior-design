@@ -4,6 +4,7 @@ import java.util.BitSet;
 import java.util.HashMap;
 
 import Jama.Matrix;
+import SimultanousBanks.Bank;
 
 
 public class Model2 {

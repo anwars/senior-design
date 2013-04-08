@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Random;
 
 import Jama.Matrix;
+import SimultanousBanks.Bank;
 
 /*
  * 	Points: 1) We need to automate the connections/linking process
@@ -29,27 +30,6 @@ public class Model2 {
 	
 	//-------------------------------------------------------------------------------------------------------//
 	
-	
-	
-	
-	static double[][] bArr1;
-	static double[][] bArr2;
-	static double[][] bArr3;
-	static double[][] bArr4;
-	static double[][] bArr5;
-	static double[][] bArr6;
-	static double[][] bArr7;
-	static double[][] bArr8;
-	
-	
-	static double [][] debtArr1 = new double[30][30];    //{ {-1.}, {-1.,-1.},{-1.,-1.}};		//  = { {1}, {3, 10}, {4, 1} };
-	static double [][] debtArr2 = new double[30][30];        //{ {-1.}, {-1.,-1.},{-1.,-1.}}; 		//  = { {2}, {1, 6}, {4, 4} };
-	static double [][] debtArr3 = new double[30][30];     //{ {-1.}, {-1.,-1.} }; 		//  = { {3}, {2, 4} };
-	static double [][] debtArr4 = new double[30][30];    //{ {-1.}, {-1.,-1.} }; 		//  = { {4}, {5, 13} };
-	static double [][] debtArr5 = new double[30][30];  //  { {-1.}, {-1.,-1.} }; 		//  = { {5}, {3, 8} };
-	static double [][] debtArr6 = new double[30][30];
-	static double [][] debtArr7 = new double[30][30];
-	static double [][] debtArr8 = new double[30][30];
 	
 	static double [][][] allConnections = new double[25][25][25];
 	static double [][][] allDebts = new double[25][25][25];
@@ -893,11 +873,18 @@ public class Model2 {
 			//Now need to setup the true/false array
 			
 			
+			boolean[] safe = new boolean[1];
+			
+			
+			if (bitArr[0] == '0') {
+				bankBool1 = 0;
+				
+				if (safe[0]) continue;
 			
 			
 			
-			if (bitArr[0] == '0') bankBool1 = 0;
-			else bankBool1 = 1;
+			}
+			else {bankBool1 = 1;}
 			//matrixArray[0] = bankBool1;
 			
 			if (bitArr[1] == '0') bankBool2 = 0;

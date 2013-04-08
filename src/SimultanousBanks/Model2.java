@@ -323,8 +323,7 @@ public class Model2 {
 			char[] bitArr = bitString.toCharArray();
 			//System.out.println(bitArr);
 			
-			//Now need to setup the true/false array
-			
+			//Now need to setup the true/false array			
 			
 			
 			boolean bankBool1; //false means that it is insolvent; true means that it is solvent
@@ -356,24 +355,7 @@ public class Model2 {
 			globalCount++;
 		}
 		System.out.println();
-		System.out.println("Number of failed banks: " + failureCount);
-		
-		
-		
-	
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		System.out.println("Number of failed banks: " + failureCount);		
 		
 		for (int i = 0; i < 3; i++){
 			//System.out.println(globalMatrix1[1][i]);
@@ -381,13 +363,7 @@ public class Model2 {
 
 		for (int i = 0; i < 3; i++){
 			//System.out.println(globalMatrix2[i][0]);
-		}
-		
-		
-		
-		
-		
-		
+		}		
 		/*
 		int test = 3;
 		
@@ -403,17 +379,6 @@ public class Model2 {
 		
 		}
 		*/
-		//MatrixSetup();
-		
-		
-		
-		
+		//MatrixSetup();		
 	}
-	
-	
-	
-	
-	
-	
-
 }
