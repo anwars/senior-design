@@ -73,6 +73,9 @@ public class Model2 {
 	static HashMap<Double, Double> solvencyMap = new HashMap<Double, Double>();
 	static HashMap<Double, Boolean> bankFailure = new HashMap<Double, Boolean>();
 	
+	static HashMap<Integer, String> bankNames = new HashMap<Integer, String>();
+	
+	static int Market;
 	
 	static double [][] bankArr1;
 	static double [][] bankArr2;
@@ -736,9 +739,10 @@ public static boolean consistencyAlgorithms(double resultArr[][]){
 	 */
 	
 	
-public static void initializeBanks(){
+public static void initializeBanks(int market){
 	
 	// new encoding for banks
+	Market = market;
 			
 	allConnections = new double[25][25][25];
 	allDebts = new double[25][25][25];
@@ -746,6 +750,7 @@ public static void initializeBanks(){
 	solvencyMap = new HashMap<Double, Double>();
 	bankFailure = new HashMap<Double, Boolean>();
 	
+	numberOfBanks = 13;
 	powerBanks = (int)Math.pow(2, numberOfBanks);
 	
 	allBanks = new double[25]; //why does this even exist?
@@ -759,6 +764,9 @@ public static void initializeBanks(){
 	globalCount = 1;
 	failureCount = 0;
 	
+	globalMatrix1 = new double[numberOfBanks][numberOfBanks];
+	globalMatrix2 = new double[numberOfBanks][1];
+	
 	 bankArr1 = new double[][] { {1}, {2, 6.29, base2, bankBool2}, {3, 5.254, base3, bankBool3}, {4, 7.622, base4, bankBool4 }, {5, 4.292, base5, bankBool5}, {6, 7.252, base6, bankBool6}, {7, 6.512, base7, bankBool7}, {8, 3.774, base8, bankBool8}, {9, 5.92, base9, bankBool9}, {10, 5.772, base10, bankBool10}, {11, 2.368, base11, bankBool11}, {12, 1.924, base12, bankBool12}  , {13, 2.22, base13, bankBool13} }; 
 	 bankArr2 = new double[][] { {2}, {1, 20.0003, base1, bankBool1}, {3, 14.46, base3, bankBool3}, {4, 25.546, base4, bankBool4}, {5, 13.978, base5, bankBool5}, {6, 19.28, base6, bankBool6}, {7, 17.834, base7, bankBool7}, {8, 14.701, base8, bankBool8}, {9, 17.111, base9, bankBool9}, {10, 22.172, base10, bankBool10}, {11, 10.122, base11, bankBool11}, {12, 8.435, base12, bankBool12} , {13, 11.086, base13, bankBool13} };
 	 bankArr3 = new double[][] { {3}, {1, 2.52, base1, bankBool1} , {2, 2.49, base2, bankBool2}, {4, 2.52, base4, bankBool4 }, {5, 1.86, base5, bankBool5}, {6, 2.79, base6, bankBool6}, {7, 2.55, base7, bankBool7}, {8, 1.71, base8, bankBool8}, {9, 2.52, base9, bankBool9}, {10, 2.49, base10, bankBool10}, {11, 1.26, base11, bankBool11}, {12, 0.72, base12, bankBool12}, {13, 0.9, base13, bankBool13} };
@@ -771,7 +779,7 @@ public static void initializeBanks(){
 	 bankArr10 = new double [][] { {10}, {1, 10.043, base1, bankBool1}, {2, 12.342, base2, bankBool2}, {3, 7.865, base3, bankBool3}, {4, 11.858, base4, bankBool4}, {5, 7.502, base5, bankBool5}, {6, 9.196, base6, bankBool6}, {7, 8.591, base7, bankBool7}, {8, 7.139, base8, bankBool8} , {9, 8.833, base9, bankBool9}, {11, 4.598, base11, bankBool11}, {12, 4.598, base12, bankBool12}, {13, 6.413, base13, bankBool13}   };
 	 bankArr11 = new double [][] { {11}, {1, 9.911, base1, bankBool1}, {2, 13.651, base2, bankBool2}, {3, 9.163, base3, bankBool3}, {4, 16.456, base4, bankBool4}, {5, 4.862, base5, bankBool5}, {6, 9.724, base6, bankBool6}, {7, 9.163, base7, bankBool7}, {8, 11.594, base8, bankBool8}, {9, 11.22, base9, bankBool9}, {10, 10.472, base10, bankBool10}, {12, 12.342, base12, bankBool12}, {13, 16.83, base13, bankBool13} };
 	 bankArr12 = new double [][] { {12}, {1, 2.478, base1, bankBool1}, {2, 3.186, base2, bankBool2}, {3, 1.475, base3, bankBool3}, {4, 3.54, base4, bankBool4}, {5, 1.357, base5, bankBool5}, {6, 2.065, base6, bankBool6}, {7, 2.242, base7, bankBool7}, {8, 3.245, base8, bankBool8}, {9, 1.121, base9, bankBool9}, {10, 4.012, base10, bankBool10}, {11, 3.835, base11, bankBool11}, {13, 12.98, base13, bankBool13} };
-	 bankArr13 = new double [][] { {13}, {1, 2.021, base1, bankBool1}, {2, 2.961, base2, bankBool2}, {3, 1.363, base3, bankBool3}, {4, 3.055, base4, bankBool4}, {5, 1.222, base5, bankBool5}, {6, 1.551, base6, bankBool6}, {7, 1.927, base7, bankBool7}, {8, 2.444, base8, bankBool8}, {9, 1.363, base9, bankBool9}, {10, 3.431, base10, bankBool10},  {12, 8.272, base12, bankBool12}  }; //{11, 3.478, base11, bankBool11},
+	 bankArr13 = new double [][] { {13}, {1, 2.021, base1, bankBool1}, {2, 2.961, base2, bankBool2}, {3, 1.363, base3, bankBool3}, {4, 3.055, base4, bankBool4}, {5, 1.222, base5, bankBool5}, {6, 1.551, base6, bankBool6}, {7, 1.927, base7, bankBool7}, {8, 2.444, base8, bankBool8}, {9, 1.363, base9, bankBool9}, {10, 3.431, base10, bankBool10}, {11, 3.478, base11, bankBool11},  {12, 8.272, base12, bankBool12}  }; //
 		 
 	 
 	 
@@ -782,7 +790,41 @@ public static void initializeBanks(){
 		 bankArr18 = new double[][] {{18}};
 		 bankArr19 = new double[][] {{19}};
 		 bankArr20 = new double[][] {{20}};
-	
+		 
+		 
+		 allBases[0] = 9;
+		 allBases[1] = 131;
+		 allBases[2] = 34;
+		 allBases[3] = 76;
+		 allBases[4] = 86;
+		 allBases[5] = 171;
+		 allBases[6] = 40;
+		 allBases[7] = 24;
+		 allBases[8] = 43;
+		 allBases[9] = 137;
+		 allBases[10] = 4;
+		 allBases[11] = 1.3;
+		 allBases[12] = 0.9;
+		 
+		 
+		 bankNames.clear();
+		 bankNames.put(1, "AXP");
+		 bankNames.put(2, "BAC");
+		 bankNames.put(3, "BK");
+		 bankNames.put(4, "C");
+		 bankNames.put(5, "GS");
+		 bankNames.put(6, "JPM");
+		 bankNames.put(7, "MS");
+		 bankNames.put(8, "PNC");
+		 bankNames.put(9, "USB");
+		 bankNames.put(10, "WFC");
+		 bankNames.put(11, "AIG");
+		 bankNames.put(12, "FNM");
+		 bankNames.put(13, "FRE");
+		 
+		 
+		 
+		 
 	
 			 allConnections[0] = bankArr1;
 			 allConnections[1] = bankArr2;
@@ -806,21 +848,7 @@ public static void initializeBanks(){
 			 allConnections[17] = bankArr18;
 			 allConnections[18] = bankArr19;
 			 allConnections[19] = bankArr20;
-			 
-			 allBases[0] = 9;
-			 allBases[1] = 131;
-			 allBases[2] = 34;
-			 allBases[3] = 76;
-			 allBases[4] = 86;
-			 allBases[5] = 171;
-			 allBases[6] = 40;
-			 allBases[7] = 24;
-			 allBases[8] = 43;
-			 allBases[9] = 137;
-			 allBases[10] = 4;
-			 allBases[11] = 1.3;
-			 allBases[12] = 0.9;
-			 
+			
 			 // set all bases to a constant
 			 /*
 			 for (int i = 0; i < 20; i++){
@@ -829,9 +857,9 @@ public static void initializeBanks(){
 			 */
 }
 	
-	public static void addBank(double base){
+	public static void addBank(String name, double base){
 		
-		if (numberOfBanks == 20) return; //bounds checking
+		if (numberOfBanks == 20) throw new NullPointerException(); //bounds checking
 		
 		numberOfBanks++;
 		powerBanks = (int)Math.pow(2, numberOfBanks );
@@ -841,6 +869,8 @@ public static void initializeBanks(){
 		
 		globalMatrix1 = new double[numberOfBanks][numberOfBanks];
 		globalMatrix2 = new double[numberOfBanks][1];
+		
+		bankNames.put(numberOfBanks, name);
 		
 		
 	}
@@ -905,11 +935,15 @@ public static void initializeBanks(){
 		
 		if (!exists) replicate = new double[arr.length][4];
 		
-		
 		int i = 0;
+		boolean flag = false;
 		for (double [] subArr : arr ){
+			
+			if (subArr[0] == source) flag = true;
+			
 			if (subArr[0] != source) {
 				replicate[i] = subArr;
+				if (flag) replicate[i][0] = replicate[i][0] - 1;
 				i++;
 			}
 		}
@@ -917,50 +951,67 @@ public static void initializeBanks(){
 		
 	}
 	
-	public static void deleteBank(int bankID){
+	public static void deleteBank(String bankName){
+		
+		// First remove from HashMap:
+		int bankID = -1;
+		for (int i = 1; i <= numberOfBanks; i++){
+			if (bankNames.get(i).equals(bankName)) bankID = i;
+		}
 		
 		if (bankID < 1 || bankID > numberOfBanks){
 			throw new IllegalArgumentException();
 		}
 		
+		for (int i = bankID; i < numberOfBanks; i++){
+			String temp = bankNames.get(bankID+1);
+			bankNames.put(bankID, temp);
+		}
+		bankNames.remove(numberOfBanks);
+				
+				
+		
 		// for causing creditors to drop
+		/*
 		for (int i = 0; i < numberOfBanks; i++){
 			boolean flag = false;
-			for (int  j = 1; j < allConnections[i].length; j++){
+			for (int  j = 1; j < allConnections[i].length-1; j++){
 				
 				if (flag) {
-					allConnections[i][j][0] = allConnections[i][j][0] -1;
+					allConnections[i][j] = allConnections[i][j+1];
+					allConnections[i][j][0] = allConnections[i][j][0] - 1;
 				}
 				
 				if (!flag){
 					if (allConnections[i][j][0] == bankID) flag = true;
 				}
-				
-				
+					
 			}
-			
 		}
+		*/
 		
-		
-		for (int i = 0; i < allConnections[i].length; i++){
+		for (int i = 0; i < numberOfBanks; i++){
 			
 			double [][] temp = allConnections[i];
 
 			int destination = (int)temp[0][0];
+			System.out.println(destination);
+			if (destination!=bankID)
 			deleteCreditor(destination, bankID);
 		}
-		
-
-		
-		
+			
 		double[][][] tempConnections = new double[25][25][25];
 		
 		// for causing all banks to drop one place
 		int c = 0;
+		boolean flag = false;
 		for (int i = 0; i < numberOfBanks; i++){
+			//System.out.println(allConnections[i][0][0] + " , " + bankID );
+			if (allConnections[i][0][0]==bankID) flag = true;
+			
 			if (allConnections[i][0][0] != bankID){
 				tempConnections[c] = allConnections[i];
-				tempConnections[c][0][0] = c+1;
+				if (flag){tempConnections[c][0][0] = tempConnections[c][0][0] - 1;}
 				c++;
 			}
 		}
@@ -969,15 +1020,28 @@ public static void initializeBanks(){
 		powerBanks = (int)Math.pow(2, numberOfBanks);
 		
 		
-		//allConnections = tempConnections;
+		allConnections = tempConnections;
 		//double [][]delArr = {{bankID}};
 		//allConnections[bankID-1] = delArr;
+		
 		for (int i = 0; i < numberOfBanks; i++){
 			for (int j = 0; j < allConnections[i].length; j++){
 				System.out.print(allConnections[i][j][0] + " ");
 			}
 			System.out.println();
 		}
+		
+		
+		for (int i = 0; i < numberOfBanks; i++){
+			for (int j = 1; j < allConnections[i].length; j++){
+				System.out.print("{" + allConnections[i][j][0] + ", " + allConnections[i][j][1] + ", " + allConnections[i][j][2] + "}  ");
+			}
+			System.out.println();
+		}
+		
+		globalMatrix1 = new double[numberOfBanks][numberOfBanks];
+		globalMatrix2 = new double[numberOfBanks][1];
+		
 	}
 	
 	
@@ -1380,7 +1444,7 @@ public static void initializeBanks(){
 		*/
 		//MatrixSetup();
 		
-		initializeBanks();
+		initializeBanks(Market);
 		
 	  	}	
 	}

@@ -75,7 +75,9 @@ public class ButtonAttempt1 extends JPanel implements ActionListener {
 			int source = Integer.parseInt(args[1]);
 			double amount = Double.parseDouble(args[2]);
 			
-			Model2.addBank(destination);
+			String fake = "I am fake";
+			
+			Model2.addBank(fake, destination);
 			//Model2.addCreditor(destination, source, amount);
 		
 		}

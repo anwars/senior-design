@@ -9,7 +9,7 @@ package X_GUI_Compatible1;
 	import java.awt.*;
 	import java.awt.event.*;
 	import javax.swing.*;
-	import java.util.*;
+import java.util.*;
 	
 
 	public class ButtonAttempt2 extends JFrame{
@@ -19,6 +19,8 @@ package X_GUI_Compatible1;
 	    final String RtoL = "Right to left";
 	    final String LtoR = "Left to right";
 	    JButton applyButton = new JButton("Apply component orientation");
+	    
+	    static int MarketChoice;
 	    
 	    public ButtonAttempt2(String name) {
 	        super(name);
@@ -70,8 +72,15 @@ package X_GUI_Compatible1;
 	        final JLabel addBank = new JLabel("Add Bank");
 	        final JLabel addCreditor = new JLabel("Add Creditor");
 	        
-	        final JLabel delBank = new JLabel("Delete Bank");
+	        final JButton delBank = new JButton("Delete Bank");
+	        
+	        //final JLabel delBank = new JLabel("Delete Bank");
 	        final JLabel delCreditor = new JLabel("Delete Creditor");
+	        
+	        String[] banks = {"AXP", "BAC", "BK", "C", "GS", "JPM", "MS", "PNC", "USB", "WFC", "AIG", "FNM", "FRE"}; 
+	        final JComboBox bankList = new JComboBox(banks);
+	        bankList.setMaximumSize(new Dimension(60, 50));
+	        
 	        
 	        bankPanel.add(addBank);
 	        bankPanel.add(Box.createRigidArea(new Dimension(15, 0)));
@@ -83,16 +92,23 @@ package X_GUI_Compatible1;
 	        creditorPanel.add(anotherField);
 	        creditorPanel.setMaximumSize(new Dimension(200, 25));
 	        
-	        delBankPanel.add(delBank);
+	        delBankPanel.add(bankList);
 	        delBankPanel.add(Box.createRigidArea(new Dimension(15, 0)));
-	        delBankPanel.add(delBnkField);
+	        delBankPanel.add(delBank);
+	        
+	        //delBankPanel.add(delBnkField);
 	        delBankPanel.setMaximumSize(new Dimension(200, 25));
+	        
+
+	      
+	        
 	        
 	        delCredPanel.add(delCreditor);
 	        delCredPanel.add(Box.createRigidArea(new Dimension(15, 25)));
-	        delCredPanel.add(delCredField);
+	        delCredPanel.add(delCredField);	        	        
 	        delCredPanel.setMaximumSize(new Dimension(200, 25));
 	        
+	        	        
 	        compsToExperiment.add(Box.createRigidArea(new Dimension(10, 0)));
 	        compsToExperiment.add(simulate);
 	        compsToExperiment.add(Box.createRigidArea(new Dimension(30, 0)));
@@ -110,11 +126,13 @@ package X_GUI_Compatible1;
 	        
 	        compsToExperiment.setMaximumSize(new Dimension(10000,30));
 	        
-	        final JButton button1 = new JButton("Button 1");
-	        final JButton button2 = new JButton("Button 2");
+	        final JButton market1 = new JButton("Primary Loans");
+	        final JButton market2 = new JButton("Credit Default Swaps");
+	        final JButton market3 = new JButton("Money Market");
 	        
-	        final JButton button3 = new JButton("Button 3");
 	        final JButton button4 = new JButton("Button 4");
+	      
+	        
 	        
 	        //Add controls to set up the component orientation in the experiment layout
 	        final ButtonGroup group = new ButtonGroup();
@@ -124,15 +142,25 @@ package X_GUI_Compatible1;
 	        controls.add(RtoLbutton);
 	        controls.add(applyButton);
 	        
-	       // firstLayer.add(button1);
-	        //firstLayer.add(button2);
+	        firstLayer.add(Box.createRigidArea(new Dimension(10,0)));
+	        firstLayer.add(market1);
+	        firstLayer.add(Box.createRigidArea(new Dimension(20, 0)));
+	        firstLayer.add(market2);
+	        firstLayer.add(Box.createRigidArea(new Dimension(20, 0)));
+	        firstLayer.add(market3);
+	        firstLayer.add(Box.createRigidArea(new Dimension(180, 0)));
+	        firstLayer.setAlignmentX(RIGHT_ALIGNMENT);
 	        
-	       // secondLayer.add(button3);
+	        secondLayer.add(Box.createRigidArea(new Dimension(10,0)));
+	        //secondLayer.add(bankList);
+	        //secondLayer.add(Box.createHorizontalGlue());
+	       //secondLayer.setAlignmentX(RIGHT_ALIGNMENT);
 	        //secondLayer.add(button4);
 	        
 	        topLayer.add(compsToExperiment);
+	        topLayer.add(Box.createRigidArea(new Dimension(0, 10)));
 	        topLayer.add(firstLayer);
-	        topLayer.add(Box.createRigidArea(new Dimension(0, 5)));
+	        topLayer.add(Box.createRigidArea(new Dimension(0, 10)));
 	        topLayer.add(secondLayer);
 	        
 	        //Process the Apply component orientation button press
@@ -202,9 +230,11 @@ package X_GUI_Compatible1;
 	        textField.addActionListener(new ActionListener(){
 	        	public void actionPerformed(ActionEvent e){
 	        		try{
+	        			//TODO    
+	        			String name = ""; //THIS HAS TO BE INITIALIZED!!!
 		        		String str = textField.getText();
 		        		double base = Double.parseDouble(str);
-		        		Model2.addBank(base);
+		        		Model2.addBank(name, base);
 	        		}
 	        		catch (NumberFormatException nfe){
 	        			JFrame fr = new JFrame("Invalid input!");
@@ -221,16 +251,21 @@ package X_GUI_Compatible1;
 	        			fr.setVisible(true);
 	        		}
 	        		
+	        		catch (NullPointerException npe){
+	        			JFrame fr = new JFrame("Maximum number of banks exist!");
+	        			fr.setSize(new Dimension(300, 0));
+	        			fr.setVisible(true);
+	        		}
+	        		
 	        	}
 	        	
 	        });
 	        
-	        delBnkField.addActionListener(new ActionListener(){
+	        delBank.addActionListener(new ActionListener(){
 	        	public void actionPerformed(ActionEvent e){
-	        		String str = delBnkField.getText();
-	        		int i = Integer.parseInt(str);
+	        		String str = (String)bankList.getSelectedItem();
 	        		try{
-	        			Model2.deleteBank(i);
+	        			Model2.deleteBank(str);
 	        		}
 	        		
 	        		
@@ -246,6 +281,12 @@ package X_GUI_Compatible1;
 	        			// need to print out an error message
 	        			JFrame fr = new JFrame("Bank does not exist!");
 	        			//fr.setDefaultCloseOperation(EXIT_ON_CLOSE);
+	        			fr.setSize(new Dimension(300, 0));
+	        			fr.setVisible(true);
+	        		}
+	        		
+	        		catch (NullPointerException npe){
+	        			JFrame fr = new JFrame("Bank does not exist!");
 	        			fr.setSize(new Dimension(300, 0));
 	        			fr.setVisible(true);
 	        		}
@@ -285,6 +326,49 @@ package X_GUI_Compatible1;
 	        	}
 	        });
 	        
+	        market1.setEnabled(false);
+	        market2.setEnabled(true);
+	        market3.setEnabled(true);
+	        
+	        market1.addActionListener(new ActionListener(){
+	        	public void actionPerformed(ActionEvent e){
+	        		market1.setEnabled(false);
+	        		market2.setEnabled(true);
+	        		market3.setEnabled(true);
+	        		MarketChoice = 1;
+	        		Model2.initializeBanks(MarketChoice);
+	        	}
+	        });
+	        
+	        market2.addActionListener(new ActionListener(){
+	        	public void actionPerformed(ActionEvent e){
+	        		market2.setEnabled(false);
+	        		market1.setEnabled(true);
+	        		market3.setEnabled(true);
+	        		MarketChoice = 2;
+	        		Model2.initializeBanks(MarketChoice);
+	        	}
+	        });
+	        
+	        market3.addActionListener(new ActionListener(){
+	        	public void actionPerformed(ActionEvent e){
+	        		market3.setEnabled(false);
+	        		market1.setEnabled(true);
+	        		market2.setEnabled(true);
+	        		MarketChoice = 3;
+	        		Model2.initializeBanks(MarketChoice);
+	        	}
+	        });
+	        
+	        /*
+	        bankList.addActionListener(new ActionListener(){
+	        	public void actionPerformed(ActionEvent e){
+	        		String bank = (String) bankList.getSelectedItem();
+	        		System.out.println(bank);
+	        	}
+	        });
+	        */
+	        
 	       // pane.add(compsToExperiment, BorderLayout.PAGE_START);
 	        pane.add(topLayer);
 	    }
@@ -308,7 +392,9 @@ package X_GUI_Compatible1;
 	      //  frame.pack();
 	        frame.setVisible(true);
 	        
-	        Model2.initializeBanks();
+	        
+	        MarketChoice = 1;
+	        Model2.initializeBanks(MarketChoice);
 	    }
 	    
 	    public static void main(String[] args) {
