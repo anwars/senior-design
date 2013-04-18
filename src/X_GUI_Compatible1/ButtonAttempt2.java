@@ -353,9 +353,8 @@ import java.util.Map.Entry;
 	        				}
 	        			}
 	        			failedBanks.add("AXP");
-	        			graph.recolor(failedBanks);
-	        			
-	        			graph.redraw();
+	        			graph.recolor(failedBanks);	        			
+	        			//graph.redraw();
 	        			
 	        			
 	        		}
@@ -656,6 +655,10 @@ import java.util.Map.Entry;
 	        		market3.setEnabled(true);
 	        		MarketChoice = 1;
 	        		Model2.initializeBanks(MarketChoice);
+	        		graph.clearGraph();
+	        		graph.drawNodes();
+	        		graph.drawPrimaryLoansEdges();
+	        		graph.redraw();
 	        	}
 	        });
 	        
@@ -666,6 +669,10 @@ import java.util.Map.Entry;
 	        		market3.setEnabled(true);
 	        		MarketChoice = 2;
 	        		Model2.initializeBanks(MarketChoice);
+	        		graph.clearGraph();
+	        		graph.drawNodes();
+	        		graph.drawCreditDefaultEdges();
+	        		graph.redraw();
 	        	}
 	        });
 	        

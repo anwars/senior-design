@@ -54,7 +54,7 @@ public class MyGraph extends JFrame {
 	
 	public void drawNetwork() {
 		drawNodes();
-		drawCompleteEdges();				
+		drawPrimaryLoansEdges();				
 	}
 	
 	public void drawNodes() {
@@ -64,8 +64,8 @@ public class MyGraph extends JFrame {
 		}
 	}
 	
-	public void drawCompleteEdges() {
-		// connect all banks to each other
+	public void drawPrimaryLoansEdges() {
+		// full connectivity
 		for (int i = 0; i < banks.size(); i++) {
 			for (int j = 0; j < banks.size(); j++) {
 				if (i == j) continue;
@@ -73,6 +73,127 @@ public class MyGraph extends JFrame {
 					graph.insertEdge(parent, null, "", banks.get(i).getVertex(), banks.get(j).getVertex());
 			}
 		}		
+	}
+	
+	public void drawCreditDefaultEdges() {
+		//AXP
+		graph.insertEdge(parent, null, "", findBank("AXP"), findBank("C"));
+		graph.insertEdge(parent, null, "", findBank("AXP"), findBank("GS"));
+		graph.insertEdge(parent, null, "", findBank("AXP"), findBank("JPM"));
+		graph.insertEdge(parent, null, "", findBank("AXP"), findBank("MS"));
+		graph.insertEdge(parent, null, "", findBank("AXP"), findBank("USB"));
+		graph.insertEdge(parent, null, "", findBank("AXP"), findBank("AIG"));
+		
+		//BAC
+		graph.insertEdge(parent, null, "", findBank("BAC"), findBank("AXP"));
+		graph.insertEdge(parent, null, "", findBank("BAC"), findBank("BK"));
+		graph.insertEdge(parent, null, "", findBank("BAC"), findBank("C"));
+		graph.insertEdge(parent, null, "", findBank("BAC"), findBank("GS"));
+		graph.insertEdge(parent, null, "", findBank("BAC"), findBank("JPM"));
+		graph.insertEdge(parent, null, "", findBank("BAC"), findBank("MS"));
+		graph.insertEdge(parent, null, "", findBank("BAC"), findBank("PNC"));
+		graph.insertEdge(parent, null, "", findBank("BAC"), findBank("USB"));
+		graph.insertEdge(parent, null, "", findBank("BAC"), findBank("WFC"));
+		graph.insertEdge(parent, null, "", findBank("BAC"), findBank("AIG"));
+		
+		//BK		
+		
+		//C
+		graph.insertEdge(parent, null, "", findBank("C"), findBank("AXP"));
+		graph.insertEdge(parent, null, "", findBank("C"), findBank("BAC"));
+		graph.insertEdge(parent, null, "", findBank("C"), findBank("BK"));
+		graph.insertEdge(parent, null, "", findBank("C"), findBank("GS"));
+		graph.insertEdge(parent, null, "", findBank("C"), findBank("JPM"));
+		graph.insertEdge(parent, null, "", findBank("C"), findBank("MS"));
+		graph.insertEdge(parent, null, "", findBank("C"), findBank("PNC"));
+		graph.insertEdge(parent, null, "", findBank("C"), findBank("USB"));
+		graph.insertEdge(parent, null, "", findBank("C"), findBank("WFC"));
+		graph.insertEdge(parent, null, "", findBank("C"), findBank("AIG"));
+		
+		//GS
+		graph.insertEdge(parent, null, "", findBank("GS"), findBank("AXP"));
+		graph.insertEdge(parent, null, "", findBank("GS"), findBank("BAC"));
+		graph.insertEdge(parent, null, "", findBank("GS"), findBank("BK"));
+		graph.insertEdge(parent, null, "", findBank("GS"), findBank("C"));
+		graph.insertEdge(parent, null, "", findBank("GS"), findBank("JPM"));
+		graph.insertEdge(parent, null, "", findBank("GS"), findBank("MS"));
+		graph.insertEdge(parent, null, "", findBank("GS"), findBank("PNC"));
+		graph.insertEdge(parent, null, "", findBank("GS"), findBank("WFC"));
+		graph.insertEdge(parent, null, "", findBank("GS"), findBank("AIG"));
+		
+		//JPM
+		graph.insertEdge(parent, null, "", findBank("JPM"), findBank("AXP"));
+		graph.insertEdge(parent, null, "", findBank("JPM"), findBank("BAC"));
+		graph.insertEdge(parent, null, "", findBank("JPM"), findBank("BK"));
+		graph.insertEdge(parent, null, "", findBank("JPM"), findBank("C"));
+		graph.insertEdge(parent, null, "", findBank("JPM"), findBank("GS"));
+		graph.insertEdge(parent, null, "", findBank("JPM"), findBank("AXP"));
+		graph.insertEdge(parent, null, "", findBank("JPM"), findBank("MS"));
+		graph.insertEdge(parent, null, "", findBank("JPM"), findBank("PNC"));
+		graph.insertEdge(parent, null, "", findBank("JPM"), findBank("USB"));
+		graph.insertEdge(parent, null, "", findBank("JPM"), findBank("WFC"));
+		graph.insertEdge(parent, null, "", findBank("JPM"), findBank("AIG"));
+		graph.insertEdge(parent, null, "", findBank("JPM"), findBank("FNM"));
+		
+		//MS
+		graph.insertEdge(parent, null, "", findBank("MS"), findBank("AXP"));
+		graph.insertEdge(parent, null, "", findBank("MS"), findBank("BAC"));
+		graph.insertEdge(parent, null, "", findBank("MS"), findBank("BK"));
+		graph.insertEdge(parent, null, "", findBank("MS"), findBank("C"));
+		graph.insertEdge(parent, null, "", findBank("MS"), findBank("GS"));
+		graph.insertEdge(parent, null, "", findBank("MS"), findBank("JPM"));
+		graph.insertEdge(parent, null, "", findBank("MS"), findBank("PNC"));
+		graph.insertEdge(parent, null, "", findBank("MS"), findBank("USB"));
+		graph.insertEdge(parent, null, "", findBank("MS"), findBank("AIG"));
+		
+		//PNC
+		
+		//USB
+		graph.insertEdge(parent, null, "", findBank("USB"), findBank("AXP"));
+		graph.insertEdge(parent, null, "", findBank("USB"), findBank("C"));
+		graph.insertEdge(parent, null, "", findBank("USB"), findBank("GS"));
+		
+		
+		//WFC
+		graph.insertEdge(parent, null, "", findBank("WFC"), findBank("AXP"));
+		graph.insertEdge(parent, null, "", findBank("WFC"), findBank("BAC"));
+		graph.insertEdge(parent, null, "", findBank("WFC"), findBank("BK"));
+		graph.insertEdge(parent, null, "", findBank("WFC"), findBank("C"));
+		graph.insertEdge(parent, null, "", findBank("WFC"), findBank("GS"));
+		graph.insertEdge(parent, null, "", findBank("WFC"), findBank("MS"));
+		graph.insertEdge(parent, null, "", findBank("WFC"), findBank("PNC"));
+		graph.insertEdge(parent, null, "", findBank("WFC"), findBank("USB"));
+		graph.insertEdge(parent, null, "", findBank("WFC"), findBank("AIG"));
+		
+		//AIG
+		graph.insertEdge(parent, null, "", findBank("AIG"), findBank("AXP"));
+		graph.insertEdge(parent, null, "", findBank("AIG"), findBank("BAC"));
+		graph.insertEdge(parent, null, "", findBank("AIG"), findBank("BK"));
+		graph.insertEdge(parent, null, "", findBank("AIG"), findBank("C"));
+		graph.insertEdge(parent, null, "", findBank("AIG"), findBank("GS"));
+		graph.insertEdge(parent, null, "", findBank("AIG"), findBank("JPM"));
+		graph.insertEdge(parent, null, "", findBank("AIG"), findBank("MS"));
+		graph.insertEdge(parent, null, "", findBank("AIG"), findBank("PNC"));
+		graph.insertEdge(parent, null, "", findBank("AIG"), findBank("USB"));
+		graph.insertEdge(parent, null, "", findBank("AIG"), findBank("WFC"));
+		graph.insertEdge(parent, null, "", findBank("AIG"), findBank("FNM"));
+		graph.insertEdge(parent, null, "", findBank("AIG"), findBank("FRE"));
+		
+		//FNM
+		graph.insertEdge(parent, null, "", findBank("FNM"), findBank("BAC"));
+		graph.insertEdge(parent, null, "", findBank("FNM"), findBank("PNC"));
+		graph.insertEdge(parent, null, "", findBank("FNM"), findBank("USB"));
+		graph.insertEdge(parent, null, "", findBank("FNM"), findBank("WFC"));
+		graph.insertEdge(parent, null, "", findBank("FNM"), findBank("AIG"));
+		graph.insertEdge(parent, null, "", findBank("FNM"), findBank("FRE"));
+		
+		//FRE
+		graph.insertEdge(parent, null, "", findBank("FRE"), findBank("BAC"));
+		graph.insertEdge(parent, null, "", findBank("FRE"), findBank("USB"));
+		graph.insertEdge(parent, null, "", findBank("FRE"), findBank("AIG"));
+		graph.insertEdge(parent, null, "", findBank("FRE"), findBank("FNM"));
+		
+		
 	}
 	
 	public void redraw() {
@@ -183,10 +304,7 @@ public class MyGraph extends JFrame {
 		frame.setVisible(true);
 		
 		myWait(2000);
-		frame.setVisible(false);
-		
-		myWait(2000);		
-		frame.setVisible(true);
+		clearGraph();
 	}*/
 
 }
