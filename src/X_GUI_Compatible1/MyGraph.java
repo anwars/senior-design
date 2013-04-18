@@ -76,16 +76,15 @@ public class MyGraph extends JFrame {
 	}
 	
 	public void redraw() {
-		mxIGraphLayout layout = new mxCircleLayout(graph);
+		mxIGraphLayout layout = new mxCircleLayout(graph, windowSize / 2.5);
 		layout.execute(parent);			
 	}
 	
 	public void addBank(String bankName) {			
 		Object v = graph.insertVertex(parent, null, bankName , 0, 0, 30, 30, "shape=ellipse;perimeter=ellipsePerimeter");
 		banks.add(new Bank(bankName, v));
-		redraw();
-				
-	}	
+		redraw();				
+	}
 	
 	public void removeBank(String bankName) {
 		Object v = null;
@@ -119,8 +118,7 @@ public class MyGraph extends JFrame {
 		graph.getModel().beginUpdate();
 		try {
 			Object[] edges = graph.getEdgesBetween(v1, v2);
-			graph.getModel().remove(edges[0]);
-			
+			graph.getModel().remove(edges[0]);			
 		}
 		finally {
 			graph.getModel().endUpdate();
@@ -136,8 +134,14 @@ public class MyGraph extends JFrame {
 		}
 		finally {
 			graph.getModel().endUpdate();
+		}		
+	}
+	
+	public void recolor(ArrayList<String> failedBanks) {
+		for (int i = 0; i < failedBanks.size(); i++) {
+			Object v = findBank(failedBanks.get(i));
+			graph.getModel().setStyle(v, "shape=ellipse;perimeter=ellipsePerimeter;fillColor=red");			
 		}
-		
 	}
 	
 	public void clearGraph() {

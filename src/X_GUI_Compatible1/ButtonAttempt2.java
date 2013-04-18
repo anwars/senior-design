@@ -11,6 +11,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import java.util.*;
+import java.util.Map.Entry;
 	
 
 	public class ButtonAttempt2 extends JFrame{
@@ -343,6 +344,17 @@ import java.util.*;
 	        			for (int i = 0; i < 12; i++){
 	        				System.out.println(result[i][0]);
 	        			}
+	        			ArrayList<String> failedBanks = new ArrayList<String>();
+	        			Iterator<Entry<Double, Boolean>> it = Model2.bankFailure.entrySet().iterator();
+	        			while(it.hasNext()) {
+	        				Entry<Double, Boolean> b = it.next();
+	        				if (!b.getValue()) {
+	        					failedBanks.add(Model2.bankNames.get(b.getKey().intValue()));
+	        				}
+	        			}
+	        			failedBanks.add("AXP");
+	        			graph.recolor(failedBanks);
+	        			
 	        			graph.redraw();
 	        			
 	        			
