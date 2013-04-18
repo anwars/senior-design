@@ -80,6 +80,9 @@ package X_GUI_Compatible1;
 	        final JPanel topLayer = new JPanel();
 	        topLayer.setLayout(new BoxLayout(topLayer, BoxLayout.PAGE_AXIS));
 	        
+	        final JPanel zeroLayer = new JPanel();
+	        zeroLayer.setLayout(new BoxLayout(zeroLayer, BoxLayout.LINE_AXIS));
+	        
 	        final JPanel firstLayer = new JPanel();
 	        firstLayer.setLayout(new BoxLayout(firstLayer, BoxLayout.LINE_AXIS));
 	        
@@ -231,9 +234,11 @@ package X_GUI_Compatible1;
 	       //secondLayer.setAlignmentX(RIGHT_ALIGNMENT);
 	        //secondLayer.add(button4);
 	        
+	        topLayer.add(Box.createRigidArea(new Dimension(0, 10)));
+	        topLayer.add(choose);
 	        topLayer.add(Box.createRigidArea(new Dimension(0,10)));
 	        topLayer.add(firstLayer);
-	        topLayer.add(Box.createRigidArea(new Dimension(0, 10)));
+	        topLayer.add(Box.createRigidArea(new Dimension(0, 20)));
 	        topLayer.add(compsToExperiment);
 	        topLayer.add(Box.createRigidArea(new Dimension(0, 10)));
 	        topLayer.add(secondLayer);
@@ -329,10 +334,48 @@ package X_GUI_Compatible1;
 		        		String name = args[0];		        		
 		        		double base = Double.parseDouble(args[1]);
 		        		Model2.addBank(name, base);
-		        		banks.add(str);
-		        		updateLists();
-		        		
-		        		pane.repaint();
+		        		banks.add(args[0]);
+	        			System.out.println(str);
+	        			
+	        			updateLists();
+	        			
+	        			
+	        			creditorPanel.removeAll();
+	        			delCredPanel.removeAll();
+	        			
+	        			String [] b = convertToStrings();
+	        	    	bankList = new JComboBox(b);
+	        	    	bankList1 = new JComboBox(b);
+	        	    	bankList2 = new JComboBox(b);
+	        	    	
+	        	    	 creditorPanel.add(delBank);
+	        		     creditorPanel.add(Box.createRigidArea(new Dimension(15,0)));	        
+	        		     creditorPanel.add(bankList);
+	        		       
+	        		     creditorPanel.add(Box.createRigidArea(new Dimension(15,0)));
+	        	    		        	    	
+	        	   			creditorPanel.validate();
+	        	   			creditorPanel.repaint();
+	        	   			delCredPanel.add(addCreditor);
+	        		        delCredPanel.add(Box.createRigidArea(new Dimension(15, 0)));
+	        		        delCredPanel.add(delCreditor);
+	        		        delCredPanel.add(Box.createRigidArea(new Dimension(15,0)));
+	        		        delCredPanel.add(bankList1);
+	        		        delCredPanel.add(Box.createRigidArea(new Dimension(15,0)));
+	        		        delCredPanel.add(bankList2);
+	        		        delCredPanel.add(Box.createRigidArea(new Dimension(20,0)));
+	        		        delCredPanel.add(field1);
+	        		        
+	        		        delCredPanel.add(Box.createRigidArea(new Dimension(20,0)));	
+	        		        
+
+	        		        delCredPanel.add(Box.createRigidArea(new Dimension(15, 25)));
+	        		        	        
+	        		        delCredPanel.setMaximumSize(new Dimension(480, 25));
+	        		        
+	        		        delCredPanel.validate();
+	        		        delCredPanel.repaint();
+	        			
 		        		
 	        		}
 	        		catch (NumberFormatException nfe){
