@@ -1,11 +1,8 @@
 package X_GUI_Compatible1;
 
-import java.awt.BorderLayout;
 import java.util.ArrayList;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import com.mxgraph.layout.mxCircleLayout;
 import com.mxgraph.layout.mxIGraphLayout;
@@ -13,17 +10,17 @@ import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
 
 public class MyGraph extends JFrame {
-	private static mxGraph graph;
-	private static Object parent;
-	private static ArrayList<Bank> banks;
+	private mxGraph graph;
+	private Object parent;
+	private ArrayList<Bank> banks;
 	
-	private static int windowSize = 500; 
+	public int windowSize = 500; 
 	
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -2707712944901661771L;
+	private final static long serialVersionUID = -2707712944901661771L;
 
 	public MyGraph() {
 
@@ -43,17 +40,11 @@ public class MyGraph extends JFrame {
 		
 		redraw();
 		
-		JButton button = new JButton("My button");
-		JPanel toolbar = new JPanel();
-		toolbar.add(button);
-		
 		mxGraphComponent graphComponent = new mxGraphComponent(graph);
-		getContentPane().setLayout(new BorderLayout());
-		getContentPane().add(graphComponent, BorderLayout.CENTER);
-		getContentPane().add(toolbar, BorderLayout.NORTH);
+		getContentPane().add(graphComponent);
 	}
 	
-	private static void initBanks() {
+	public void initBanks() {
 		String[] initBankNames = {"AXP", "BAC", "BK", "C", "GS", "JPM", "MS", "PNC", "USB", "WFC", "AIG", "FNM", "FRE"};
 		banks = new ArrayList<Bank>();
 		for (int i = 0; i < initBankNames.length; i++) {
@@ -61,19 +52,19 @@ public class MyGraph extends JFrame {
 		}					
 	}
 	
-	public static void drawNetwork() {
+	public void drawNetwork() {
 		drawNodes();
 		drawCompleteEdges();				
 	}
 	
-	public static void drawNodes() {
+	public void drawNodes() {
 		for (int i = 0; i < banks.size(); i++) {			
 			Object v = graph.insertVertex(parent, null, banks.get(i).getName() , 0, 0, 30, 30, "shape=ellipse;perimeter=ellipsePerimeter");
 			banks.get(i).setVertex(v);
 		}
 	}
 	
-	public static void drawCompleteEdges() {
+	public void drawCompleteEdges() {
 		// connect all banks to each other
 		for (int i = 0; i < banks.size(); i++) {
 			for (int j = 0; j < banks.size(); j++) {
@@ -84,19 +75,19 @@ public class MyGraph extends JFrame {
 		}		
 	}
 	
-	private static void redraw() {
+	public void redraw() {
 		mxIGraphLayout layout = new mxCircleLayout(graph);
 		layout.execute(parent);			
 	}
 	
-	public static void addBank(String bankName) {			
+	public void addBank(String bankName) {			
 		Object v = graph.insertVertex(parent, null, bankName , 0, 0, 30, 30, "shape=ellipse;perimeter=ellipsePerimeter");
 		banks.add(new Bank(bankName, v));
 		redraw();
 				
 	}	
 	
-	public static void removeBank(String bankName) {
+	public void removeBank(String bankName) {
 		Object v = null;
 		for(int i = 0; i < banks.size(); i++) {
 			if (banks.get(i).getName().equals(bankName)) {
@@ -115,14 +106,14 @@ public class MyGraph extends JFrame {
 		
 	}	
 	
-	private static Object findBank(String b) {
+	public Object findBank(String b) {
 		for (int i = 0; i < banks.size(); i++) {
 			if (banks.get(i).getName().equals(b)) return banks.get(i).getVertex();
 		}
 		return null;
 	}
 	
-	public static void removeEdge(String bank1, String bank2) {
+	public void removeEdge(String bank1, String bank2) {
 		Object v1 = findBank(bank1);
 		Object v2 = findBank(bank2);
 		graph.getModel().beginUpdate();
@@ -135,7 +126,7 @@ public class MyGraph extends JFrame {
 		}		
 	}
 	
-	public static void addEdge(String bank1, String bank2) {
+	public void addEdge(String bank1, String bank2) {
 		Object v1 = findBank(bank1);
 		Object v2 = findBank(bank2);
 		graph.getModel().beginUpdate();
@@ -148,11 +139,11 @@ public class MyGraph extends JFrame {
 		
 	}
 	
-	public static void clearGraph() {
+	public void clearGraph() {
 		graph.removeCells(graph.getChildVertices(graph.getDefaultParent()));
 	}
 	
-	public static void myWait(int n) {
+	public void myWait(int n) {
 		try {
 			Thread.sleep(n);
 		} catch (InterruptedException e) {
@@ -160,7 +151,7 @@ public class MyGraph extends JFrame {
 		}
 	}
 	
-	private static class Bank {
+	private class Bank {
 		
 		private String name;
 		private Object vertex;
@@ -180,7 +171,7 @@ public class MyGraph extends JFrame {
 		public void setVertex(Object v) { this.vertex = v; }
 	}
 
-	public static void main(String[] args) {
+	public void main(String[] args) {
 		MyGraph frame = new MyGraph();		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(windowSize, windowSize);		

@@ -7,9 +7,10 @@ package X_GUI_Compatible1;
 	*/
 
 	import java.awt.*;
-	import java.awt.event.*;
-	import javax.swing.*;
-	import java.util.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+import java.util.*;
 	
 
 	public class ButtonAttempt2 extends JFrame{
@@ -23,6 +24,8 @@ package X_GUI_Compatible1;
 	    static JComboBox bankList;
 	    static JComboBox bankList1;
 	    static JComboBox bankList2;
+	    
+	    static MyGraph graph;
 	    
 	    
 	    static int MarketChoice;
@@ -343,6 +346,7 @@ package X_GUI_Compatible1;
 	        			for (int i = 0; i < 12; i++){
 	        				System.out.println(result[i][0]);
 	        			}
+	        			graph.redraw();
 	        			
 	        			
 	        		}
@@ -402,6 +406,7 @@ package X_GUI_Compatible1;
 		        		String name = args[0];		        		
 		        		double base = Double.parseDouble(args[1]);
 		        		Model2.addBank(name, base);
+		        		graph.addBank(name);
 		        		banks.add(args[0]);
 	        			System.out.println(str);
 	        			
@@ -555,7 +560,8 @@ package X_GUI_Compatible1;
 	        	public void actionPerformed(ActionEvent e){
 	        		
 	        		int d1 = bankList1.getSelectedIndex();
-	        		int d2 = bankList2.getSelectedIndex();        		
+	        		int d2 = bankList2.getSelectedIndex();    
+	        		
 	        		
 	        		try{
 	        			if (d1 == d2) throw new IllegalArgumentException();	  
@@ -564,6 +570,7 @@ package X_GUI_Compatible1;
 		        			        		
 	        			if (d1 < 0 || d2 < 0 ) throw new IllegalArgumentException();
 	        			Model2.addCreditor(d1, d2, amount);
+	        			graph.addEdge(banks.get(d1), banks.get(d2));
 	        			
 	        		}
 	        		
@@ -690,8 +697,10 @@ package X_GUI_Compatible1;
 	    	  public void actionPerformed(ActionEvent e){
 	    		 
 	    		  try{
-	    		  // HERE WE WILL CALL THE VISUALIZE GRAPH METHOD
-	    		  
+	    			  graph = new MyGraph();
+	    			  graph.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    			  graph.setSize(graph.windowSize, graph.windowSize);		
+	    			  graph.setVisible(true);	    		  
 	    		  }
 	    		  
 	    		  catch (Exception ex){
