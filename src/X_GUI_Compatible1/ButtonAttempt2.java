@@ -29,6 +29,8 @@ package X_GUI_Compatible1;
 	    static ArrayList<String> banks = new ArrayList<String>();  
 	    static String[] bks = {"AXP", "BAC", "BK", "C", "GS", "JPM", "MS", "PNC", "USB", "WFC", "AIG", "FNM", "FRE"}; 
 	    
+	    static Object [] marketCaps1 = {74, 241, 30, 274, 86, 169, 85, 22, 64, 121, 187, 59, 47};
+	    
 	    public static void initBankList(){
 	    	for (String s: bks){
 	    		banks.add(s);
@@ -72,8 +74,8 @@ package X_GUI_Compatible1;
 	    	initBankList();
 	    	
 	        final JPanel compsToExperiment = new JPanel();
-	        compsToExperiment.setLayout(new BoxLayout(compsToExperiment, BoxLayout.LINE_AXIS));
-	        experimentLayout.setAlignment(FlowLayout.CENTER); //TRAILING
+	        compsToExperiment.setLayout(new BoxLayout(compsToExperiment, BoxLayout.PAGE_AXIS));
+	       
 	        JPanel controls = new JPanel();
 	        controls.setLayout(new FlowLayout());
 	        
@@ -101,6 +103,10 @@ package X_GUI_Compatible1;
 	        final JPanel delCredPanel = new JPanel();
 	        delCredPanel.setLayout(new BoxLayout(delCredPanel, BoxLayout.LINE_AXIS));
 	        
+	        final JPanel interm1 = new JPanel();
+	        interm1.setLayout(new BoxLayout(interm1, BoxLayout.LINE_AXIS));
+	        
+	        
 	        final JButton addCreditor = new JButton("Add Creditor");
 	        final JButton delCreditor = new JButton("Delete Creditor");
 	        
@@ -113,7 +119,9 @@ package X_GUI_Compatible1;
 	        //Add buttons to the experiment layout
 	        JButton simulate = new JButton("Simulate");
 	      
-	        final JTextField textField = new JTextField(1);
+	        final JTextField textField = new JTextField(10);
+	        textField.setMaximumSize(new Dimension(100, 25));
+	        
 	        final JTextField anotherField = new JTextField(1);
 	        
 	        final JTextField delBnkField = new JTextField(1);
@@ -124,6 +132,17 @@ package X_GUI_Compatible1;
 	        final JButton delBank = new JButton("Delete Bank");
 	        
 	        final JLabel choose = new JLabel("Choose Network Structure");
+	       
+	        final JPanel applyHold = new JPanel(); 
+	        final JLabel apply = new JLabel("Apply Shock");
+	       
+	        applyHold.add(Box.createRigidArea(new Dimension(15, 0)));
+	        applyHold.add(apply);
+	        applyHold.add(Box.createHorizontalGlue());
+	        
+	        zeroLayer.add(Box.createRigidArea(new Dimension(15,0)));
+	        zeroLayer.add(choose);
+	        zeroLayer.add(Box.createHorizontalGlue());
 	        
 	        //final JLabel delBank = new JLabel("Delete Bank");
 	        
@@ -133,24 +152,32 @@ package X_GUI_Compatible1;
 	        bankList.setMaximumSize(new Dimension(60, 50));
 	        
 	        bankList1 = new JComboBox(temp);
-	        bankList.setMinimumSize(new Dimension(60, 50));
+	        bankList1.setMaximumSize(new Dimension(50, 50));
 	        
 	        bankList2 = new JComboBox(temp);
-	        bankList.setMinimumSize(new Dimension(60, 50));
+	        bankList2.setMaximumSize(new Dimension(50, 50));
 	        
 	        final JTextField field1 = new JTextField(1);
+	        field1.setMaximumSize(new Dimension(75, 25));
 	        
+	        bankPanel.add(Box.createRigidArea(new Dimension(15, 0)));
 	        bankPanel.add(addBank);
 	        bankPanel.add(Box.createRigidArea(new Dimension(15, 0)));
 	        bankPanel.add(textField);
-	        bankPanel.setMaximumSize(new Dimension(200, 25));
-	        	        
+	       // bankPanel.setMinimumSize(new Dimension(100, 25));
+	       // bankPanel.setMaximumSize(new Dimension(200, 25));
+	        //bankPanel.add(Box.createRigidArea(new Dimension(30, 0)));
+	      // bankPanel.setMinimumSize(new Dimension(150, 20));
+	       bankPanel.add(Box.createHorizontalGlue());
+	        
+	        creditorPanel.add(Box.createRigidArea(new Dimension(15, 0)));	        
 	        creditorPanel.add(delBank);
 	        creditorPanel.add(Box.createRigidArea(new Dimension(15,0)));	        
 	        creditorPanel.add(bankList);
+	        creditorPanel.setMaximumSize(new Dimension(1200, 25));
+	     //   creditorPanel.add(Box.createHorizontalGlue());
 	       
-	        creditorPanel.add(Box.createRigidArea(new Dimension(15,0)));
-	       
+	        delCredPanel.add(Box.createRigidArea(new Dimension(15, 0)));
 	        delCredPanel.add(addCreditor);
 	        delCredPanel.add(Box.createRigidArea(new Dimension(15, 0)));
 	        delCredPanel.add(delCreditor);
@@ -161,7 +188,7 @@ package X_GUI_Compatible1;
 	        delCredPanel.add(Box.createRigidArea(new Dimension(20,0)));
 	        delCredPanel.add(field1);
 	        
-	        delCredPanel.add(Box.createRigidArea(new Dimension(20,0)));	
+	     //  delCredPanel.add(Box.createHorizontalGlue());
 	        
 	       
 	        
@@ -176,31 +203,45 @@ package X_GUI_Compatible1;
 	      //  delBankPanel.setMaximumSize(new Dimension(200, 25));
 	        	        
 	      
-	        delCredPanel.add(Box.createRigidArea(new Dimension(15, 25)));
+	        delCredPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 	        	        
-	        delCredPanel.setMaximumSize(new Dimension(480, 25));
+	        delCredPanel.setMaximumSize(new Dimension(1000, 25));
 	        
 	        	        
-	        compsToExperiment.add(Box.createRigidArea(new Dimension(10, 0)));
-	        compsToExperiment.add(simulate);
-	        compsToExperiment.add(Box.createRigidArea(new Dimension(30, 0)));
-	        compsToExperiment.add(bankPanel);
-	         compsToExperiment.add(Box.createRigidArea(new Dimension(30, 0)));
+	       // compsToExperiment.add(Box.createRigidArea(new Dimension(10, 0)));
+	      //  compsToExperiment.add(simulate);
+	        
+	         compsToExperiment.add(Box.createRigidArea(new Dimension(0, 10)));
 	       
 	       // compsToExperiment.add(Box.createRigidArea(new Dimension(30, 0)));
-	        compsToExperiment.add(creditorPanel);
-	       // compsToExperiment.add(Box.createHorizontalGlue());
-	       // compsToExperiment.add(Box.createRigidArea(new Dimension(30, 0)));
-	        compsToExperiment.add(delCredPanel);
+	      //  compsToExperiment.add(creditorPanel);
 	        
+	       // compsToExperiment.add(Box.createHorizontalGlue());
+	       // compsToExperiment.add(Box.createRigidArea(new Dimension(0, 10)));
+	      //  compsToExperiment.add(delCredPanel);
+	        
+	     final JComboBox shockBox = new JComboBox(temp);
+	     shockBox.setMaximumSize(new Dimension(50, 25));
+	     final JTextField shockField = new JTextField(1);
+	     shockField.setMaximumSize(new Dimension(100, 25));
+	     final JButton applyShock = new JButton("Apply Shock");
+	    // applyShock.add(Box.createHorizontalGlue());
+	     
+	     interm1.add(Box.createRigidArea(new Dimension(15, 0)));
+	     interm1.add(shockBox);
+	     interm1.add(Box.createRigidArea(new Dimension(20, 0)));
+	     interm1.add(shockField);
+	     interm1.add(Box.createRigidArea(new Dimension(20, 0)));
+	     interm1.add(applyShock);
+	     interm1.setMaximumSize(new Dimension(1000, 25));
+	    // interm1.add(Box.createHorizontalGlue());
 	        
 	      //  compsToExperiment.setBackground(Color.RED);
 	        
 	        //Left to right component orientation is selected by default
-	        compsToExperiment.setComponentOrientation(
-	                ComponentOrientation.LEFT_TO_RIGHT);
+	       // compsToExperiment.setComponentOrientation(       ComponentOrientation.LEFT_TO_RIGHT);
 	        
-	        compsToExperiment.setMaximumSize(new Dimension(10000,30));
+	        compsToExperiment.setMaximumSize(new Dimension(1000,300));
 	        
 	        final JButton market1 = new JButton("Primary Loans");
 	        final JButton market2 = new JButton("Credit Default Swaps");
@@ -209,6 +250,13 @@ package X_GUI_Compatible1;
 	        final JButton button4 = new JButton("Button 4");
 	      
 	        
+	        String [] cols = {"Ticker", "Market Cap", "Equilibrium", "Status"};
+	        Object[][] preData = {{"AXP", marketCaps1[0]}, {"BAC", marketCaps1[1]}, {"BK", marketCaps1[2]}, {"C", marketCaps1[3]}, {"GS", marketCaps1[4]}, {"JPM", marketCaps1[5]}, {"MS", marketCaps1[6]}, {"PNC", marketCaps1[7]}, {"USB", marketCaps1[8]}, {"WFC", marketCaps1[9]}, {"AIG", marketCaps1[10]}, {"FNM", marketCaps1[11]}, {"FRE", marketCaps1[11]   }     };
+	        
+	       // JTable table = new JTable(preData, cols);
+	       // table.setMaximumSize(new Dimension(200, 200));
+	        
+	       // secondLayer.add(table);
 	        
 	        //Add controls to set up the component orientation in the experiment layout
 	        final ButtonGroup group = new ButtonGroup();
@@ -224,7 +272,7 @@ package X_GUI_Compatible1;
 	        firstLayer.add(market2);
 	        firstLayer.add(Box.createRigidArea(new Dimension(20, 0)));
 	        firstLayer.add(market3);
-	        firstLayer.add(Box.createRigidArea(new Dimension(180, 0)));
+	        //firstLayer.add(Box.createRigidArea(new Dimension(180, 0)));
 	        firstLayer.add(Box.createHorizontalGlue());
 	       // firstLayer.setAlignmentX(RIGHT_ALIGNMENT);
 	        
@@ -235,13 +283,25 @@ package X_GUI_Compatible1;
 	        //secondLayer.add(button4);
 	        
 	        topLayer.add(Box.createRigidArea(new Dimension(0, 10)));
-	        topLayer.add(choose);
+	        topLayer.add(simulate);
+	        topLayer.add(Box.createRigidArea(new Dimension(0, 10)));
+	        topLayer.add(zeroLayer);
 	        topLayer.add(Box.createRigidArea(new Dimension(0,10)));
 	        topLayer.add(firstLayer);
+	        topLayer.add(Box.createRigidArea(new Dimension(0, 300)));
+	        topLayer.add(applyHold);
 	        topLayer.add(Box.createRigidArea(new Dimension(0, 20)));
-	        topLayer.add(compsToExperiment);
-	        topLayer.add(Box.createRigidArea(new Dimension(0, 10)));
+	        topLayer.add(interm1);
 	        topLayer.add(secondLayer);
+	        topLayer.add(Box.createRigidArea(new Dimension(0, 30)));
+	        topLayer.add(bankPanel);
+	        topLayer.add(Box.createRigidArea(new Dimension(0, 20)));
+	        topLayer.add(delCredPanel);
+	        topLayer.add(Box.createRigidArea(new Dimension(0, 10)));
+	        topLayer.add(Box.createVerticalGlue());
+	        
+	        //
+	        
 	        
 	        //Process the Apply component orientation button press
 	        applyButton.addActionListener(new ActionListener(){
@@ -594,7 +654,29 @@ package X_GUI_Compatible1;
 	        });
 	        
 	        
-	        
+	      applyShock.addActionListener(new ActionListener(){
+	    	  public void actionPerformed(ActionEvent e){
+	    		  
+	    		  try{
+	    			  
+	    			  String temp = shockField.getText();
+	    			  double shock = Double.parseDouble(temp);
+	    			  
+	    			  int index = shockBox.getSelectedIndex();
+	    			  
+	    			  Model2.applyShock(shock, index);
+	    			  
+	    		  }
+	    		  
+	    		  catch (Exception ex){
+	    			  ex.printStackTrace();
+	    		  }
+	    		  
+	    		  
+	    	  }
+	    	  
+	    	  
+	      }); 
 	        
 	        /*
 	        bankList.addActionListener(new ActionListener(){
@@ -622,7 +704,7 @@ package X_GUI_Compatible1;
 	        //Set up the content pane.
 	        frame.addComponentsToPane(frame.getContentPane());
 	        
-	        frame.setSize(1250, 900);
+	        frame.setSize(1000, 900);
 	        
 	        //Display the window.
 	      //  frame.pack();

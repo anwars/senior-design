@@ -322,7 +322,7 @@ public class Model2 {
 			
 			int sourceBank = (int)arr[c][0];
 			double min = arr[c][1];
-			double base = arr[c][2];
+			double base = allBases[sourceBank-1];    //  arr[c][2];
 			double type = allBools[sourceBank-1];
 			
 			double [][] debtArray = allDebts[sourceBank-1]; 
@@ -1048,21 +1048,9 @@ public static void initializeBanks(int market){
 	}
 	
 	
-	public void setBools(){ //this must be called at the appropriate time or all hell will break loose
-		
-		for (int i = 0; i < allConnections.length; i++){
-			for (int j = 1; j < allConnections[i].length; j++){
-				
-			}
-			
-			
-			
-		}
-		
-		
-		
+	public static void applyShock(double shock, int bankID){
+		allBases[bankID] = allBases[bankID] - shock;
 	}
-	
 	
 	
 	
