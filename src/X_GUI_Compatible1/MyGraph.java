@@ -119,7 +119,8 @@ public class MyGraph extends JFrame {
 		graph.getModel().beginUpdate();
 		try {
 			Object[] edges = graph.getEdgesBetween(v1, v2);
-			for (Object edge : edges) graph.getModel().remove(edge);
+			graph.getModel().remove(edges[0]);
+			
 		}
 		finally {
 			graph.getModel().endUpdate();
@@ -171,7 +172,7 @@ public class MyGraph extends JFrame {
 		public void setVertex(Object v) { this.vertex = v; }
 	}
 
-	public void main(String[] args) {
+	/*public void main(String[] args) {
 		MyGraph frame = new MyGraph();		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(windowSize, windowSize);		
@@ -182,6 +183,6 @@ public class MyGraph extends JFrame {
 		
 		myWait(2000);		
 		frame.setVisible(true);
-	}
+	}*/
 
 }

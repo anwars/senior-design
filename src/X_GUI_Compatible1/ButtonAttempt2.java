@@ -121,8 +121,6 @@ import java.util.*;
 	        
 	        //Add buttons to the experiment layout
 	        JButton simulate = new JButton("Simulate");
-	        
-	        JButton visualize = new JButton("Visualize Graph");
 	      
 	        final JTextField textField = new JTextField(10);
 	        textField.setMaximumSize(new Dimension(100, 25));
@@ -148,7 +146,6 @@ import java.util.*;
 	        zeroLayer.add(Box.createRigidArea(new Dimension(15,0)));
 	        zeroLayer.add(simulate);
 	        zeroLayer.add(Box.createRigidArea(new Dimension(15, 0)));
-	        zeroLayer.add(visualize);
 	        zeroLayer.add(Box.createHorizontalGlue());
 	       // zeroLayer.add(Box.createHorizontalGlue());
 	        
@@ -482,6 +479,7 @@ import java.util.*;
 	        		String str = (String)bankList.getSelectedItem();
 	        		try{
 	        			Model2.deleteBank(str);
+	        			graph.removeBank(str);
 	        			banks.remove(str);
 	        			System.out.println(str);
 	        			
@@ -599,7 +597,7 @@ import java.util.*;
 	        	public void actionPerformed(ActionEvent e){
 	        		
 	        		int d1 = bankList1.getSelectedIndex();
-	        		int d2 = bankList2.getSelectedIndex(); 
+	        		int d2 = bankList2.getSelectedIndex(); 	        		
 	        		
 	        		d1++;
 	        		d2++;
@@ -609,6 +607,7 @@ import java.util.*;
 	        			
 	        			if (d1 < 0 || d2 < 0 ) throw new IllegalArgumentException();
 	        			Model2.deleteCreditor(d1, d2, true);
+	        			graph.removeEdge(banks.get(d1-1), banks.get(d2-1));
 	        			
 	        		}
 	        		
@@ -692,27 +691,6 @@ import java.util.*;
 	    	  
 	    	  
 	      }); 
-	      
-	      visualize.addActionListener(new ActionListener(){
-	    	  public void actionPerformed(ActionEvent e){
-	    		 
-	    		  try{
-	    			  graph = new MyGraph();
-	    			  graph.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    			  graph.setSize(graph.windowSize, graph.windowSize);		
-	    			  graph.setVisible(true);	    		  
-	    		  }
-	    		  
-	    		  catch (Exception ex){
-	    			  //Exception handling
-	    			  JFrame fr = new JFrame("Oops! Something went wrong!");
-	    			  fr.setSize(new Dimension(300, 0));
-	    			  fr.setVisible(true);
-	    			  
-	    		  }
-	    		  
-	    	  }
-	      });
 	        
 	        /*
 	        bankList.addActionListener(new ActionListener(){
@@ -745,6 +723,11 @@ import java.util.*;
 	        //Display the window.
 	      //  frame.pack();
 	        frame.setVisible(true);
+	        
+	        graph = new MyGraph();
+	        graph.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			graph.setSize(graph.windowSize, graph.windowSize);		
+			graph.setVisible(true);
 	        
 	        
 	        MarketChoice = 1;
