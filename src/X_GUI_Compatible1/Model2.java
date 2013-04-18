@@ -74,7 +74,7 @@ public class Model2 {
 	static HashMap<Double, Boolean> bankFailure = new HashMap<Double, Boolean>();
 	
 	static HashMap<Integer, String> bankNames = new HashMap<Integer, String>();
-	
+		
 	static int Market;
 	
 	static double [][] bankArr1;
@@ -807,6 +807,8 @@ public static void initializeBanks(int market){
 		 allBases[12] = 0.9;
 		 
 		 
+		 
+		 
 		 bankNames.clear();
 		 bankNames.put(1, "AXP");
 		 bankNames.put(2, "BAC");
@@ -823,9 +825,6 @@ public static void initializeBanks(int market){
 		 bankNames.put(13, "FRE");
 		 
 		 
-		 
-		 
-	
 			 allConnections[0] = bankArr1;
 			 allConnections[1] = bankArr2;
 			 allConnections[2] = bankArr3;
@@ -914,7 +913,7 @@ public static void initializeBanks(int market){
 		else System.out.println("length is 0!");
 	}
 	
-	public static void deleteCreditor(int destination, int source){
+	public static void deleteCreditor(int destination, int source, boolean fixed){
 		
 		double [][] arr = allConnections[destination-1]; 
 		
@@ -943,7 +942,7 @@ public static void initializeBanks(int market){
 			
 			if (subArr[0] != source) {
 				replicate[i] = subArr;
-				if (flag) replicate[i][0] = replicate[i][0] - 1;
+				if (flag && !fixed) replicate[i][0] = replicate[i][0] - 1;
 				i++;
 			}
 		}
@@ -959,13 +958,15 @@ public static void initializeBanks(int market){
 			if (bankNames.get(i).equals(bankName)) bankID = i;
 		}
 		
+	//	System.out.print(bankID + " ");
 		if (bankID < 1 || bankID > numberOfBanks){
 			throw new IllegalArgumentException();
 		}
 		
 		for (int i = bankID; i < numberOfBanks; i++){
-			String temp = bankNames.get(bankID+1);
-			bankNames.put(bankID, temp);
+			String temp = bankNames.get(i+1);
+			
+			bankNames.put(i, temp);
 		}
 		bankNames.remove(numberOfBanks);
 				
@@ -995,9 +996,9 @@ public static void initializeBanks(int market){
 			double [][] temp = allConnections[i];
 
 			int destination = (int)temp[0][0];
-			System.out.println(destination);
+			//System.out.println(destination);
 			if (destination!=bankID)
-			deleteCreditor(destination, bankID);
+			deleteCreditor(destination, bankID, false);
 		}
 			
 		double[][][] tempConnections = new double[25][25][25];
@@ -1024,6 +1025,7 @@ public static void initializeBanks(int market){
 		//double [][]delArr = {{bankID}};
 		//allConnections[bankID-1] = delArr;
 		
+		/*
 		for (int i = 0; i < numberOfBanks; i++){
 			for (int j = 0; j < allConnections[i].length; j++){
 				System.out.print(allConnections[i][j][0] + " ");
@@ -1038,6 +1040,7 @@ public static void initializeBanks(int market){
 			}
 			System.out.println();
 		}
+		*/
 		
 		globalMatrix1 = new double[numberOfBanks][numberOfBanks];
 		globalMatrix2 = new double[numberOfBanks][1];

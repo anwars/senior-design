@@ -9,7 +9,7 @@ package X_GUI_Compatible1;
 	import java.awt.*;
 	import java.awt.event.*;
 	import javax.swing.*;
-import java.util.*;
+	import java.util.*;
 	
 
 	public class ButtonAttempt2 extends JFrame{
@@ -20,13 +20,57 @@ import java.util.*;
 	    final String LtoR = "Left to right";
 	    JButton applyButton = new JButton("Apply component orientation");
 	    
+	    static JComboBox bankList;
+	    static JComboBox bankList1;
+	    static JComboBox bankList2;
+	    
+	    
 	    static int MarketChoice;
+	    static ArrayList<String> banks = new ArrayList<String>();  
+	    static String[] bks = {"AXP", "BAC", "BK", "C", "GS", "JPM", "MS", "PNC", "USB", "WFC", "AIG", "FNM", "FRE"}; 
+	    
+	    public static void initBankList(){
+	    	for (String s: bks){
+	    		banks.add(s);
+	    	}
+	    }
+	    
+	    public static String[] convertToStrings(){
+	    	String [] result = new String[banks.size()];
+	    	int i = 0;
+	    	for (String s: banks){
+	    		result[i] = s;
+	    		i++;		
+	    	}
+	    	return result;
+	    }
+	    
+	    public static void updateLists(){
+	    	
+	    	
+	    	
+	    	String [] b = convertToStrings();
+	    	bankList = new JComboBox(b);
+	    	bankList1 = new JComboBox(b);
+	    	bankList2 = new JComboBox(b);
+	    	
+	    	bankList.repaint();
+	    	bankList1.repaint();
+	    	bankList2.repaint();
+	    	
+	    	
+	    	
+	    }
 	    
 	    public ButtonAttempt2(String name) {
 	        super(name);
 	    }
 	    
+	    
 	    public void addComponentsToPane(final Container pane) {
+	    	
+	    	initBankList();
+	    	
 	        final JPanel compsToExperiment = new JPanel();
 	        compsToExperiment.setLayout(new BoxLayout(compsToExperiment, BoxLayout.LINE_AXIS));
 	        experimentLayout.setAlignment(FlowLayout.CENTER); //TRAILING
@@ -54,6 +98,9 @@ import java.util.*;
 	        final JPanel delCredPanel = new JPanel();
 	        delCredPanel.setLayout(new BoxLayout(delCredPanel, BoxLayout.LINE_AXIS));
 	        
+	        final JButton addCreditor = new JButton("Add Creditor");
+	        final JButton delCreditor = new JButton("Delete Creditor");
+	        
 	        LtoRbutton = new JRadioButton(LtoR);
 	        LtoRbutton.setActionCommand(LtoR);
 	        LtoRbutton.setSelected(true);
@@ -69,56 +116,82 @@ import java.util.*;
 	        final JTextField delBnkField = new JTextField(1);
 	        final JTextField delCredField = new JTextField(1);
 	        
-	        final JLabel addBank = new JLabel("Add Bank");
-	        final JLabel addCreditor = new JLabel("Add Creditor");
+	        final JButton addBank = new JButton("Add Bank");
 	        
 	        final JButton delBank = new JButton("Delete Bank");
 	        
-	        //final JLabel delBank = new JLabel("Delete Bank");
-	        final JLabel delCreditor = new JLabel("Delete Creditor");
+	        final JLabel choose = new JLabel("Choose Network Structure");
 	        
-	        String[] banks = {"AXP", "BAC", "BK", "C", "GS", "JPM", "MS", "PNC", "USB", "WFC", "AIG", "FNM", "FRE"}; 
-	        final JComboBox bankList = new JComboBox(banks);
+	        //final JLabel delBank = new JLabel("Delete Bank");
+	        
+	        String [] temp = convertToStrings();
+	        
+	        bankList = new JComboBox(temp);
 	        bankList.setMaximumSize(new Dimension(60, 50));
 	        
+	        bankList1 = new JComboBox(temp);
+	        bankList.setMinimumSize(new Dimension(60, 50));
+	        
+	        bankList2 = new JComboBox(temp);
+	        bankList.setMinimumSize(new Dimension(60, 50));
+	        
+	        final JTextField field1 = new JTextField(1);
 	        
 	        bankPanel.add(addBank);
 	        bankPanel.add(Box.createRigidArea(new Dimension(15, 0)));
 	        bankPanel.add(textField);
 	        bankPanel.setMaximumSize(new Dimension(200, 25));
+	        	        
+	        creditorPanel.add(delBank);
+	        creditorPanel.add(Box.createRigidArea(new Dimension(15,0)));	        
+	        creditorPanel.add(bankList);
+	       
+	        creditorPanel.add(Box.createRigidArea(new Dimension(15,0)));
+	       
+	        delCredPanel.add(addCreditor);
+	        delCredPanel.add(Box.createRigidArea(new Dimension(15, 0)));
+	        delCredPanel.add(delCreditor);
+	        delCredPanel.add(Box.createRigidArea(new Dimension(15,0)));
+	        delCredPanel.add(bankList1);
+	        delCredPanel.add(Box.createRigidArea(new Dimension(15,0)));
+	        delCredPanel.add(bankList2);
+	        delCredPanel.add(Box.createRigidArea(new Dimension(20,0)));
+	        delCredPanel.add(field1);
 	        
-	        creditorPanel.add(addCreditor);
-	        creditorPanel.add(Box.createRigidArea(new Dimension(15, 0)));
-	        creditorPanel.add(anotherField);
-	        creditorPanel.setMaximumSize(new Dimension(200, 25));
+	        delCredPanel.add(Box.createRigidArea(new Dimension(20,0)));	
 	        
-	        delBankPanel.add(bankList);
-	        delBankPanel.add(Box.createRigidArea(new Dimension(15, 0)));
-	        delBankPanel.add(delBank);
+	       
+	        
+	       
+	      
+	       
+	       // delBankPanel.add(bankList);
+	       // delBankPanel.add(Box.createRigidArea(new Dimension(15, 0)));
+	       // delBankPanel.add(delBank);
 	        
 	        //delBankPanel.add(delBnkField);
-	        delBankPanel.setMaximumSize(new Dimension(200, 25));
-	        
-
+	      //  delBankPanel.setMaximumSize(new Dimension(200, 25));
+	        	        
 	      
-	        
-	        
-	        delCredPanel.add(delCreditor);
 	        delCredPanel.add(Box.createRigidArea(new Dimension(15, 25)));
-	        delCredPanel.add(delCredField);	        	        
-	        delCredPanel.setMaximumSize(new Dimension(200, 25));
+	        	        
+	        delCredPanel.setMaximumSize(new Dimension(480, 25));
 	        
 	        	        
 	        compsToExperiment.add(Box.createRigidArea(new Dimension(10, 0)));
 	        compsToExperiment.add(simulate);
 	        compsToExperiment.add(Box.createRigidArea(new Dimension(30, 0)));
 	        compsToExperiment.add(bankPanel);
-	        compsToExperiment.add(Box.createRigidArea(new Dimension(30, 0)));
+	         compsToExperiment.add(Box.createRigidArea(new Dimension(30, 0)));
+	       
+	       // compsToExperiment.add(Box.createRigidArea(new Dimension(30, 0)));
 	        compsToExperiment.add(creditorPanel);
-	        compsToExperiment.add(Box.createRigidArea(new Dimension(30, 0)));
-	        compsToExperiment.add(delBankPanel);
-	        compsToExperiment.add(Box.createRigidArea(new Dimension(30, 0)));
+	       // compsToExperiment.add(Box.createHorizontalGlue());
+	       // compsToExperiment.add(Box.createRigidArea(new Dimension(30, 0)));
 	        compsToExperiment.add(delCredPanel);
+	        
+	        
+	      //  compsToExperiment.setBackground(Color.RED);
 	        
 	        //Left to right component orientation is selected by default
 	        compsToExperiment.setComponentOrientation(
@@ -149,7 +222,8 @@ import java.util.*;
 	        firstLayer.add(Box.createRigidArea(new Dimension(20, 0)));
 	        firstLayer.add(market3);
 	        firstLayer.add(Box.createRigidArea(new Dimension(180, 0)));
-	        firstLayer.setAlignmentX(RIGHT_ALIGNMENT);
+	        firstLayer.add(Box.createHorizontalGlue());
+	       // firstLayer.setAlignmentX(RIGHT_ALIGNMENT);
 	        
 	        secondLayer.add(Box.createRigidArea(new Dimension(10,0)));
 	        //secondLayer.add(bankList);
@@ -157,9 +231,10 @@ import java.util.*;
 	       //secondLayer.setAlignmentX(RIGHT_ALIGNMENT);
 	        //secondLayer.add(button4);
 	        
-	        topLayer.add(compsToExperiment);
-	        topLayer.add(Box.createRigidArea(new Dimension(0, 10)));
+	        topLayer.add(Box.createRigidArea(new Dimension(0,10)));
 	        topLayer.add(firstLayer);
+	        topLayer.add(Box.createRigidArea(new Dimension(0, 10)));
+	        topLayer.add(compsToExperiment);
 	        topLayer.add(Box.createRigidArea(new Dimension(0, 10)));
 	        topLayer.add(secondLayer);
 	        
@@ -178,13 +253,30 @@ import java.util.*;
 	                //update the experiment layout
 	                compsToExperiment.validate();
 	                compsToExperiment.repaint();
+	                
+	                topLayer.validate();
+	                topLayer.repaint();
 	            }
 	        });
 	        
 	        simulate.addActionListener(new ActionListener(){
 	        	public void actionPerformed(ActionEvent e){
 	        		String[] temp = {};
-	        		Model2.main(temp);
+	        		try{
+	        			Model2.main(temp);
+	        			
+	        			double [][] result = Model2.finalResult;
+	        			
+	        			for (int i = 0; i < 12; i++){
+	        				System.out.println(result[i][0]);
+	        			}
+	        			
+	        			
+	        		}
+	        		
+	        		catch (Exception ex){
+	        			ex.printStackTrace();
+	        		}
 	        	}
 	        });
 	        
@@ -227,14 +319,21 @@ import java.util.*;
 	        });
 	        
 	        // for add bank
-	        textField.addActionListener(new ActionListener(){
+	        addBank.addActionListener(new ActionListener(){
 	        	public void actionPerformed(ActionEvent e){
 	        		try{
 	        			//TODO    
-	        			String name = ""; //THIS HAS TO BE INITIALIZED!!!
 		        		String str = textField.getText();
-		        		double base = Double.parseDouble(str);
+		        		String [] args = str.split(",");
+		        		if (args.length!=2) throw new IllegalArgumentException();
+		        		String name = args[0];		        		
+		        		double base = Double.parseDouble(args[1]);
 		        		Model2.addBank(name, base);
+		        		banks.add(str);
+		        		updateLists();
+		        		
+		        		pane.repaint();
+		        		
 	        		}
 	        		catch (NumberFormatException nfe){
 	        			JFrame fr = new JFrame("Invalid input!");
@@ -245,7 +344,7 @@ import java.util.*;
 	        		catch (IllegalArgumentException ie){
 	        			
 	        			// need to print out an error message
-	        			JFrame fr = new JFrame("Bank does not exist!");
+	        			JFrame fr = new JFrame("Not a valid argument!");
 	        			//fr.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	        			fr.setSize(new Dimension(300, 0));
 	        			fr.setVisible(true);
@@ -261,12 +360,56 @@ import java.util.*;
 	        	
 	        });
 	        
+	        //Delete Bank
 	        delBank.addActionListener(new ActionListener(){
 	        	public void actionPerformed(ActionEvent e){
 	        		String str = (String)bankList.getSelectedItem();
 	        		try{
 	        			Model2.deleteBank(str);
+	        			banks.remove(str);
+	        			System.out.println(str);
+	        			
+	        			updateLists();
+	        			
+	        			
+	        			creditorPanel.removeAll();
+	        			delCredPanel.removeAll();
+	        			
+	        			String [] b = convertToStrings();
+	        	    	bankList = new JComboBox(b);
+	        	    	bankList1 = new JComboBox(b);
+	        	    	bankList2 = new JComboBox(b);
+	        	    	
+	        	    	 creditorPanel.add(delBank);
+	        		     creditorPanel.add(Box.createRigidArea(new Dimension(15,0)));	        
+	        		     creditorPanel.add(bankList);
+	        		       
+	        		     creditorPanel.add(Box.createRigidArea(new Dimension(15,0)));
+	        	    		        	    	
+	        	   			creditorPanel.validate();
+	        	   			creditorPanel.repaint();
+	        	   			delCredPanel.add(addCreditor);
+	        		        delCredPanel.add(Box.createRigidArea(new Dimension(15, 0)));
+	        		        delCredPanel.add(delCreditor);
+	        		        delCredPanel.add(Box.createRigidArea(new Dimension(15,0)));
+	        		        delCredPanel.add(bankList1);
+	        		        delCredPanel.add(Box.createRigidArea(new Dimension(15,0)));
+	        		        delCredPanel.add(bankList2);
+	        		        delCredPanel.add(Box.createRigidArea(new Dimension(20,0)));
+	        		        delCredPanel.add(field1);
+	        		        
+	        		        delCredPanel.add(Box.createRigidArea(new Dimension(20,0)));	
+	        		        
+
+	        		        delCredPanel.add(Box.createRigidArea(new Dimension(15, 25)));
+	        		        	        
+	        		        delCredPanel.setMaximumSize(new Dimension(480, 25));
+	        		        
+	        		        delCredPanel.validate();
+	        		        delCredPanel.repaint();
+	        			
 	        		}
+	        		
 	        		
 	        		
 	        		catch (NumberFormatException ex){
@@ -277,7 +420,7 @@ import java.util.*;
 	        		
 	        		
 	        		catch (IllegalArgumentException ie){
-	        			
+	        			ie.printStackTrace();
 	        			// need to print out an error message
 	        			JFrame fr = new JFrame("Bank does not exist!");
 	        			//fr.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -286,6 +429,7 @@ import java.util.*;
 	        		}
 	        		
 	        		catch (NullPointerException npe){
+	        			npe.printStackTrace();
 	        			JFrame fr = new JFrame("Bank does not exist!");
 	        			fr.setSize(new Dimension(300, 0));
 	        			fr.setVisible(true);
@@ -295,21 +439,25 @@ import java.util.*;
 	        	}
 	        });
 	        
-	        delCredField.addActionListener(new ActionListener(){
+	        // Add Creditor
+	        addCreditor.addActionListener(new ActionListener(){
 	        	public void actionPerformed(ActionEvent e){
-	        		String str = delCredField.getText();
+	        		
+	        		int d1 = bankList1.getSelectedIndex();
+	        		int d2 = bankList2.getSelectedIndex();        		
+	        		
 	        		try{
-	        			String [] args = str.split(",");
-	        			if (args.length!=2) throw new IllegalArgumentException();
-	        			int d1 = Integer.parseInt(args[0]);
-	        			int d2 = Integer.parseInt(args[1]);
+	        			if (d1 == d2) throw new IllegalArgumentException();	  
+	        			String str = field1.getText();
+		        		double amount = Double.parseDouble(str);
+		        			        		
 	        			if (d1 < 0 || d2 < 0 ) throw new IllegalArgumentException();
-	        			Model2.deleteCreditor(d1, d2);
+	        			Model2.addCreditor(d1, d2, amount);
 	        			
 	        		}
 	        		
 	        		catch (NumberFormatException ex){
-	        			ex.printStackTrace();
+	        			
 	        			JFrame fr = new JFrame("Invalid input!");
 	        			fr.setSize(new Dimension(300, 0));
 	        			fr.setVisible(true);
@@ -321,7 +469,49 @@ import java.util.*;
 	        			fr.setVisible(true);
 	        		}
 	        		catch(Exception ex){
+	        			JFrame fr = new JFrame("Oops! Something went wrong!");
+	        			fr.setSize(new Dimension(300, 0));
+	        			fr.setVisible(true);
+	        		}
+	        	}
+	        });
+	        
+	        //Delete Creditor
+	        delCreditor.addActionListener(new ActionListener(){
+	        	public void actionPerformed(ActionEvent e){
+	        		
+	        		int d1 = bankList1.getSelectedIndex();
+	        		int d2 = bankList2.getSelectedIndex(); 
+	        		
+	        		d1++;
+	        		d2++;
+	        		        		
+	        		try{
+	        			if (d1 == d2) throw new IllegalArgumentException();
+	        			
+	        			if (d1 < 0 || d2 < 0 ) throw new IllegalArgumentException();
+	        			Model2.deleteCreditor(d1, d2, true);
+	        			
+	        		}
+	        		
+	        		catch (NumberFormatException ex){
 	        			ex.printStackTrace();
+	        			JFrame fr = new JFrame("Invalid input!");
+	        			fr.setSize(new Dimension(300, 0));
+	        			fr.setVisible(true);
+	        		}
+	        		
+	        		catch(IllegalArgumentException ie){
+	        			ie.printStackTrace();
+	        			JFrame fr = new JFrame("Invalid arguments!");
+	        			fr.setSize(new Dimension(300, 0));
+	        			fr.setVisible(true);
+	        		}
+	        		catch(Exception ex){
+	        			ex.printStackTrace();
+	        			JFrame fr = new JFrame("Oops! Something went wrong!");
+	        			fr.setSize(new Dimension(300, 0));
+	        			fr.setVisible(true);
 	        		}
 	        	}
 	        });
@@ -360,6 +550,9 @@ import java.util.*;
 	        	}
 	        });
 	        
+	        
+	        
+	        
 	        /*
 	        bankList.addActionListener(new ActionListener(){
 	        	public void actionPerformed(ActionEvent e){
@@ -381,12 +574,12 @@ import java.util.*;
 	     */
 	    private static void createAndShowGUI() {
 	        //Create and set up the window.
-	        ButtonAttempt2 frame = new ButtonAttempt2("FlowLayoutDemo");
+	        ButtonAttempt2 frame = new ButtonAttempt2("Network Resiliency in a Financial System");
 	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	        //Set up the content pane.
 	        frame.addComponentsToPane(frame.getContentPane());
 	        
-	        frame.setSize(900, 900);
+	        frame.setSize(1250, 900);
 	        
 	        //Display the window.
 	      //  frame.pack();
