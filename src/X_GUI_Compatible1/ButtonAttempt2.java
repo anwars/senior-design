@@ -118,6 +118,8 @@ package X_GUI_Compatible1;
 	        
 	        //Add buttons to the experiment layout
 	        JButton simulate = new JButton("Simulate");
+	        
+	        JButton visualize = new JButton("Visualize Graph");
 	      
 	        final JTextField textField = new JTextField(10);
 	        textField.setMaximumSize(new Dimension(100, 25));
@@ -141,8 +143,11 @@ package X_GUI_Compatible1;
 	        applyHold.add(Box.createHorizontalGlue());
 	        
 	        zeroLayer.add(Box.createRigidArea(new Dimension(15,0)));
-	        zeroLayer.add(choose);
+	        zeroLayer.add(simulate);
+	        zeroLayer.add(Box.createRigidArea(new Dimension(15, 0)));
+	        zeroLayer.add(visualize);
 	        zeroLayer.add(Box.createHorizontalGlue());
+	       // zeroLayer.add(Box.createHorizontalGlue());
 	        
 	        //final JLabel delBank = new JLabel("Delete Bank");
 	        
@@ -282,18 +287,21 @@ package X_GUI_Compatible1;
 	       //secondLayer.setAlignmentX(RIGHT_ALIGNMENT);
 	        //secondLayer.add(button4);
 	        
-	        topLayer.add(Box.createRigidArea(new Dimension(0, 10)));
-	        topLayer.add(simulate);
+	       // topLayer.add(Box.createRigidArea(new Dimension(0, 10)));
+	       // topLayer.add(simulate);
 	        topLayer.add(Box.createRigidArea(new Dimension(0, 10)));
 	        topLayer.add(zeroLayer);
 	        topLayer.add(Box.createRigidArea(new Dimension(0,10)));
 	        topLayer.add(firstLayer);
-	        topLayer.add(Box.createRigidArea(new Dimension(0, 300)));
-	        topLayer.add(applyHold);
+	        //topLayer.add(Box.createRigidArea(new Dimension(0, 300)));
+	       
 	        topLayer.add(Box.createRigidArea(new Dimension(0, 20)));
+	        
+	      //  topLayer.add(applyHold);
+	      
 	        topLayer.add(interm1);
 	        topLayer.add(secondLayer);
-	        topLayer.add(Box.createRigidArea(new Dimension(0, 30)));
+	        topLayer.add(Box.createRigidArea(new Dimension(0, 15)));
 	        topLayer.add(bankPanel);
 	        topLayer.add(Box.createRigidArea(new Dimension(0, 20)));
 	        topLayer.add(delCredPanel);
@@ -677,6 +685,25 @@ package X_GUI_Compatible1;
 	    	  
 	    	  
 	      }); 
+	      
+	      visualize.addActionListener(new ActionListener(){
+	    	  public void actionPerformed(ActionEvent e){
+	    		 
+	    		  try{
+	    		  // HERE WE WILL CALL THE VISUALIZE GRAPH METHOD
+	    		  
+	    		  }
+	    		  
+	    		  catch (Exception ex){
+	    			  //Exception handling
+	    			  JFrame fr = new JFrame("Oops! Something went wrong!");
+	    			  fr.setSize(new Dimension(300, 0));
+	    			  fr.setVisible(true);
+	    			  
+	    		  }
+	    		  
+	    	  }
+	      });
 	        
 	        /*
 	        bankList.addActionListener(new ActionListener(){
@@ -704,7 +731,7 @@ package X_GUI_Compatible1;
 	        //Set up the content pane.
 	        frame.addComponentsToPane(frame.getContentPane());
 	        
-	        frame.setSize(1000, 900);
+	        frame.setSize(550, 240);
 	        
 	        //Display the window.
 	      //  frame.pack();

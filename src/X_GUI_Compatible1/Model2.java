@@ -767,6 +767,8 @@ public static void initializeBanks(int market){
 	globalMatrix1 = new double[numberOfBanks][numberOfBanks];
 	globalMatrix2 = new double[numberOfBanks][1];
 	
+	if (market == 1){
+	
 	 bankArr1 = new double[][] { {1}, {2, 6.29, base2, bankBool2}, {3, 5.254, base3, bankBool3}, {4, 7.622, base4, bankBool4 }, {5, 4.292, base5, bankBool5}, {6, 7.252, base6, bankBool6}, {7, 6.512, base7, bankBool7}, {8, 3.774, base8, bankBool8}, {9, 5.92, base9, bankBool9}, {10, 5.772, base10, bankBool10}, {11, 2.368, base11, bankBool11}, {12, 1.924, base12, bankBool12}  , {13, 2.22, base13, bankBool13} }; 
 	 bankArr2 = new double[][] { {2}, {1, 20.0003, base1, bankBool1}, {3, 14.46, base3, bankBool3}, {4, 25.546, base4, bankBool4}, {5, 13.978, base5, bankBool5}, {6, 19.28, base6, bankBool6}, {7, 17.834, base7, bankBool7}, {8, 14.701, base8, bankBool8}, {9, 17.111, base9, bankBool9}, {10, 22.172, base10, bankBool10}, {11, 10.122, base11, bankBool11}, {12, 8.435, base12, bankBool12} , {13, 11.086, base13, bankBool13} };
 	 bankArr3 = new double[][] { {3}, {1, 2.52, base1, bankBool1} , {2, 2.49, base2, bankBool2}, {4, 2.52, base4, bankBool4 }, {5, 1.86, base5, bankBool5}, {6, 2.79, base6, bankBool6}, {7, 2.55, base7, bankBool7}, {8, 1.71, base8, bankBool8}, {9, 2.52, base9, bankBool9}, {10, 2.49, base10, bankBool10}, {11, 1.26, base11, bankBool11}, {12, 0.72, base12, bankBool12}, {13, 0.9, base13, bankBool13} };
@@ -806,7 +808,42 @@ public static void initializeBanks(int market){
 		 allBases[11] = 1.3;
 		 allBases[12] = 0.9;
 		 
+	}
+	
+	else if (market == 2){
+		
+		bankArr1 = new double[][] { {1}, {2, 3.219, base2, bankBool2}, {3, 2.8712, base3, bankBool3}, {4, 4.329, base4, bankBool4 }, {5, 7.2446, base5, bankBool5}, {6, 6.2974, base6, bankBool6}, {7, 7.77, base7, bankBool7}, {8, 2.3088, base8, bankBool8}, {9, 5.8534, base9, bankBool9}, {10, 1.6058, base10, bankBool10}, {11, 7.7774, base11, bankBool11}, {12, 0, base12, bankBool12}  , {13, 0, base13, bankBool13} }; 
+		 bankArr2 = new double[][] { {2}, {1, 10.2425, base1, bankBool1}, {3, 44.585, base3, bankBool3}, {4, 38.319, base4, bankBool4}, {5, 43.139, base5, bankBool5}, {6, 34.4871, base6, bankBool6}, {7, 45.6936, base7, bankBool7}, {8, 14.8697, base8, bankBool8}, {9, 14.5805, base9, bankBool9}, {10, 33.5472, base10, bankBool10}, {11, 48.9471, base11, bankBool11}  };
+		 bankArr3 = new double[][] { {3}, {1, 2.895, base1, bankBool1} , {2, 2.448, base2, bankBool2}, {4, 1.641, base4, bankBool4 }, {5, 2.001, base5, bankBool5}, {6, 1.536, base6, bankBool6}, {7, 1.914, base7, bankBool7} };
+		 bankArr4 = new double[][] { {4}, {1, 24.8792, base1, bankBool1}, {2, 24.6052, base2, bankBool2}, {3, 28.359, base3, bankBool3}, {5, 29.455, base5, bankBool5}, {6, 30.3318, base6, bankBool6}, {7, 23.6736, base7, bankBool7}, {8, 25.8382, base8, bankBool8,}, {9, 32.6882, base9, bankBool9}, {10, 26.1396, base10, bankBool10}, {11, 23.5366, base11, bankBool11} };
+		 bankArr5 = new double[][] { {5}, {1, 3.6722, base1, bankBool1}, {2, 4.687, base2, bankBool2}, {3, 7.3186, base3, bankBool3}, {4, 7.6626, base4, bankBool4,}, {6, 12.04, base6, bankBool6}, {7, 12.728, base7, bankBool7}, {8, 3.9732, base8, bankBool8}, {9, 2.4596, base9, bankBool9}, {10, 3.8786, base10, bankBool10}, {11, 14.4652, base11, bankBool11} } ;                        // {5, 11, 9, bankBool5 } };
+		 bankArr6 = new double[][] { {6}, {1, 15.6156, base1, bankBool1}, {2, 17.2718, base2, bankBool2}, {3, 14.365, base3, bankBool3}, {4, 16.2409, base4, bankBool4}, {5, 17.8633, base5, bankBool5}, {7, 20.9222, base7, bankBool7}, {8, 3.5152, base8, bankBool8}, {9, 14.3819, base9, bankBool9}, {10, 7.1825, base10, bankBool10}, {11, 27.1583, base11, bankBool11}, {12, 9.1429, base12, bankBool12} };
+		 bankArr7 = new double[][] { {7}, {1, 7.497, base1, bankBool1}, {2, 8.398, base2, bankBool2}, {3, 9.044, base3, bankBool3}, {4, 6.3835, base4, bankBool4} , {5, 12,444, base5, bankBool5}, {6, 11.305, base6, bankBool6}, {8, 3.1365, base8, bankBool8}, {9, 4.148, base9, bankBool9}, {10, 2.533, base10, bankBool10}, {11, 13.107, base11, bankBool11} };
+		 bankArr8 = new double[][] { {8}, {1, 1.4696, base1, bankBool1}, {2, 1.3904, base2, bankBool2 }, {3, 1.4586, base3, bankBool3}, {4, 1.3508, base4, bankBool4}, {5, 1.012, base5, bankBool5}, {6, 1.672, base6, bankBool6}, {7, 1.452, base7, bankBool7}, {9, 1.672, base9, bankBool9}, {10, 1.936, base10, bankBool10}, {11, 1.144, base11, bankBool11}, {12, 0.924, base12, bankBool12}, {13, 1.078, base13, bankBool13}  };
+		 bankArr9 = new double[][] { {9}, {1, 3.1232, base1, bankBool1}, {2, 2.4576, base2, bankBool2}, {3, 2.592, base3, bankBool3}, {4, 4.0064, base4, bankBool4}, {5, 4.48, base5, bankBool5}, {6, 2.8416, base6, bankBool6}, {7, 1.3504, base7, bankBool7}, {8, 2.8608, base8, bankBool8}, {11, 1.2992, base11, bankBool11} };
+		 bankArr10 = new double [][] { {10}, {1, 7.1995, base1, bankBool1}, {2, 3.9446, base2, bankBool2}, {3, 6.9454, base3, bankBool3}, {4, 3.4606, base4, bankBool4}, {5, 7.9981, base5, bankBool5}, {6, 2.9645, base6, bankBool6}, {7, 8.2764, base7, bankBool7}, {8, 3.4606, base8, bankBool8} , {9, 5.1183, base9, bankBool9}, {11, 5.7838, base11, bankBool11}};
+		 bankArr11 = new double [][] { {11}, {1, 19.7659, base1, bankBool1}, {2, 15.895, base2, bankBool2}, {3, 20.7944, base3, bankBool3}, {4, 23.1506, base4, bankBool4}, {5, 34.2584, base5, bankBool5}, {6, 34.6511, base6, bankBool6}, {7, 38.0732, base7, bankBool7}, {8, 14.3429, base8, bankBool8}, {9, 14.2868, base9, bankBool9}, {10, 11.8932, base10, bankBool10}, {12, 41.14, base12, bankBool12}, {13, 31.79, base13, bankBool13} };
+		 bankArr12 = new double [][] { {12},  {2, 7.4812, base2, bankBool2},  {8, 4.307, base8, bankBool8}, {9, 3.0267, base9, bankBool9}, {10, 3.3866, base10, bankBool10}, {11, 10.8619, base11, bankBool11}, {13, 12.9564, base13, bankBool13} };
+		 bankArr13 = new double [][] { {13},  {2, 2.961, base2, bankBool2}, {8, 2.452, base8, bankBool8}, {9, 3.478, base9, bankBool9}, {10, 2.5568, base10, bankBool10}, {11, 9.541, base11, bankBool11},  {12, 9.5175, base12, bankBool12}  }; //
+			 
+		
 		 
+		 allBases[0] = 9;
+		 allBases[1] = 131;
+		 allBases[2] = 34;
+		 allBases[3] = 76;
+		 allBases[4] = 86;
+		 allBases[5] = 171;
+		 allBases[6] = 40;
+		 allBases[7] = 24;
+		 allBases[8] = 43;
+		 allBases[9] = 137;
+		 allBases[10] = 4;
+		 allBases[11] = 1.3;
+		 allBases[12] = 0.9;
+		 
+		
+	}
 		 
 		 
 		 bankNames.clear();
